@@ -1,0 +1,82 @@
+**
+** Volcano tree script
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_volcanobush.agents"
+*# DS-Name "OLS Volcano Bush"
+*# attach ols_volcanobush.c16
+*# desc = "A tree that spawns very spicy fruit."
+*# Agent Animation File = "ols_volcanobush.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_volcanobush"
+*
+*
+* 36441 = custom species number
+* Objects:
+* 2 4 36441 - Tree
+* 2 7 36441 - Flower
+* 2 8 36441 - Fruit
+* Scripts:
+* 2 4 36441 1 - Tree dispenser
+* 2 4 36441 9 - Tree timer
+* 2 7 36441 9 - Flower timer
+* 2 8 36441 9 - Fruit timer
+* 2 8 36441 12 - Fruit eat
+*
+*
+
+** Create the tree (attr: activateable 4 + invisible 16 + suffer collisions 64 + suffer physics 128 = 212)
+new: simp 2 4 36441 "ols_volcanobush" 1 0 0 attr 212 bhvr 0
+  perm 100 accg 30 elas 0 fric 100 mvsf 31271 12997 tick 25
+
+** The tree timer script
+scrp 2 4 36441 9
+  tick rand 800 900 setv va00 posl setv va01 post 
+  * Create a flower (attr: invisible 16)
+  new: simp 2 7 36441 "ols_volcanobush" 1 1 rand 410 420 attr 16 bhvr 0 tick 2100
+  addv va00 rand 27 183 addv va01 rand 18 130 mvsf va00 va01
+endm
+
+* The tree dispenser script
+scrp 2 4 36441 1
+setv va00 posl setv va01 post 
+  * Create fruit (attr: mouseable 2 + collisions 64 + physics 128 = 194, bhvr: eat 16 + pickup 32 = 48)
+  new: simp 2 8 36441 "ols_volcanobush" 1 2 rand 400 600 attr 194 bhvr 48 tick 1500
+  perm 100 accg 1.2 elas 30 fric 60 aero 1.1 emit 6 0.7
+  addv va00 rand 27 183 addv va01 rand 18 130 mvsf va00 va01
+endm
+
+* flower script: turn flower into fruit
+scrp 2 7 36441 9
+  setv va00 posx setv va01 posb
+  * Create fruit
+  new: simp 2 8 36441 "ols_volcanobush" 1 2 rand 400 600 attr 194 bhvr 48 tick 1500
+  perm 100 accg 1.2 elas 30 fric 60 aero 1.1 emit 6 1 mvsf va00 va01
+  targ ownr
+  kill ownr
+endm
+
+* fruit timer and eat script
+scrp 2 8 36441 9 
+  kill ownr 
+endm
+scrp 2 8 36441 12 
+  stim writ from 78 1.2 kill ownr 
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 2 8 36441 kill targ next
+*enum 2 4 36441 kill targ next
+*enum 2 7 36441 kill targ next
+*scrx 2 8 36441 9
+*scrx 2 8 36441 12
+*scrx 2 4 36441 1
+*scrx 2 4 36441 9
+*scrx 2 7 36441 9

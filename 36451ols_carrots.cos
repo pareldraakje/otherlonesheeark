@@ -1,0 +1,131 @@
+**
+** GREENHOUSE NUTS PATCH PLANT
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_tropicnuts.agents"
+*# DS-Name "OLS Tropics Nuts"
+*# attach ols_food.c16
+*# desc = "Watch your nuts man. Yolo."
+*# Agent Animation File = "ols_food.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_food"
+*
+*
+* 36451 = Custom species number
+* Objects:
+* 1 1 36451 - Invisible patch
+* 2 7 36451 - Carrot stump
+* 2 8 36451 - Carrot
+*
+* Scripts:
+* 1 1 36451 9 - Patch plant timer
+* 2 7 36451 9 - Flower timer
+* 2 8 36451 4 - Carrot pickup
+* 2 8 36451 6 - Carrot collision
+* 2 8 36451 9 - Carrot timer
+* 2 8 36451 12 - Carrot eat event
+*
+
+** Create the invisible patch (attr: invisible 16)
+new: simp 1 1 36451 "ols_food" 1 23 1
+attr 16
+bhvr 0
+rnge 500
+mvsf 32039 12686
+tick 1
+
+** The timer script
+scrp 1 1 36451 9
+	tick rand 300 600
+	setv va00 posl
+	setv va01 post
+	setv va02 0
+	esee 2 7 36451
+		addv va02 1
+	next
+	esee 2 8 36451
+		addv va02 1
+	next
+	doif va02 lt 5
+* Create a flower (attr: invisible 16 + collide 64 + physics 128 = 208 )
+		new: simp 2 7 36451 "ols_food" 1 23 rand 410 420
+		attr 208
+		bhvr 0
+		perm 100
+		accg 1.2
+		elas 0
+		fric 100
+		tick 30
+		addv va00 rand 0 360
+		mvsf va00 va01
+	endi
+endm
+
+* flower script: turn flower into carrot
+scrp 2 7 36451 9
+	setv va00 posx
+	setv va01 post
+* Create carrot (attr: invisible 16 + collide 64 + physics 194 = )
+	new: simp 2 8 36451 "ols_food" 3 6 rand 400 600
+	mira rand 0 1
+	attr 208
+	bhvr 0
+	perm 100
+	accg 1.2
+	elas 30
+	fric 100
+	aero 1.1
+	mvsf va00 va01
+	tick 300
+	setv ov00 0
+	setv ov01 0
+	targ ownr
+	kill ownr
+endm
+
+* Nut pickup, nut collision, nut timer and eat script.
+scrp 2 8 36451 4
+	pose 1
+	setv ov01 1
+	tick 800
+endm
+scrp 2 8 36451 6
+	doif ov00 ne 0
+		pose 2
+	endi
+endm
+scrp 2 8 36451 9
+	doif ov00 eq 0
+		fric 60
+*(attr: carry 2 + collide 64 + physics 128 = 194, bhvr: eat 16 + pickup 32 = 48 )
+		attr 194
+		bhvr 48
+		emit 6 0.7
+		setv ov00 1
+	endi
+	doif ov01 ne 0
+		kill ownr
+	endi
+endm
+scrp 2 8 36451 12
+	stim writ from 78 1.2
+	kill ownr
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 1 1 36451 kill targ next
+*enum 2 8 36451 kill targ next
+*enum 2 7 36451 kill targ next
+*scrx 1 1 36451 9
+*scrx 2 8 36451 4
+*scrx 2 8 36451 6
+*scrx 2 8 36451 9
+*scrx 2 8 36451 12
+*scrx 2 7 36451 9

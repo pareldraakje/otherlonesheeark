@@ -1,0 +1,351 @@
+**
+** SNOW SCRIPT
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_snow2.agents"
+*# DS-Name "OLS Snow"
+*# attach ols_snow2.c16
+*# attach ols_snowbutton.c16
+*# desc = "It's snow! So pretty. And cold."
+*# Agent Animation File = "ols_snow2.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_snow2"
+*
+* 36432 = Custom species number
+* Objects:
+* 1 1 36432 - Dispenser
+* 2 19 36432 - Snow
+* 2 21 36432 - Snowman
+* 3 8 36432 - Snow gadget
+*
+* Scripts:
+* 1 1 36432 9 - Snow dispenser timer
+* 2 19 36432 9 - Snow timer
+* 2 19 36432 6 - Snow collision
+* 2 21 36432 1 - Snowman pushed
+* 2 21 36432 9 - Snowman melting timer
+* 3 8 36432 9 - Snow gadget timer
+* 3 8 36432 1 - Snow gadget pushed
+* 3 8 36432 5 - Snow gadget dropped
+*
+
+** Create the invisible snow dispensers (attr: invisible 16)
+new: simp 1 1 36432 "ols_snow2" 1 1 rand 550 1000
+attr 16
+bhvr 0
+mvsf 32886 12452
+tick 25
+setv ov00 1
+new: simp 1 1 36432 "ols_snow2" 1 1 rand 550 1000
+attr 16
+bhvr 0
+mvsf 33055 12701
+tick 25
+setv ov00 2
+
+** Create the snow dispenser toggle button: att 2(mouse)+16(invi)
+new: comp 1 2 36432 "ols_snowbutton" 6 0 8000
+pat: butt 2 "ols_snowbutton" 0 6 0 0 1 [2 2] 500 1
+part 2
+anim [3 3]
+mvto 32572 12477
+
+** Create the snow gadget (attr: mouseable 2 + activateable 4 + collide 64 + physics 128 = 198, bhvr: activate 1 + pickup 32 = 33)
+new: simp 3 8 36432 "ols_snow2" 10 4 880
+attr 198
+bhvr 33
+perm 100
+accg 1.5
+aero 20
+elas 0
+fric 80
+setv ov00 32763
+setv ov01 12780
+mvsf ov00 ov01
+tick 15000
+
+** Snow gadget timer script
+scrp 3 8 36432 9
+	doif carr eq null
+		mvsf ov00 ov01
+		velo 0 10
+	endi
+	enum 1 1 36432
+		tick 1000
+	next
+	wait 10
+	inst
+	enum 2 19 36432
+		doif targ ne null
+			kill targ
+		endi
+	next
+	slow
+	enum 1 1 36432
+		tick 10
+	next
+endm
+
+** Snow gadget activate 1
+scrp 3 8 36432 1
+	stim writ from 90 1
+	doif carr eq null
+		attr 192
+		bhvr 0
+		anim [1 2 3 4 5 6 7 8 9 255]
+		wait 5
+		reps 30
+			targ ownr
+			setv va00 posx
+			setv va01 post
+			new: simp 2 19 36432 "ols_snow2" 2 0 rand 10 100
+			attr 208
+			bhvr 0
+			setv ov00 1
+			perm 100
+			accg 0.05
+			aero 10
+			elas 10
+			fric 10
+			pose 1
+			mvsf va00 va01
+			emit 3 0.5
+			tick 1
+			velo rand -15 15 rand -12 -5
+			wait 1
+		repe
+		targ ownr
+		pose 0
+		attr 198
+		bhvr 33
+	else
+		anim [1 2 3 4 5 6 7 8 9 1 2 3 4 5 6 7 8 9 0]
+	endi
+endm
+
+** Snow gadget picked up
+scrp 3 8 36432 4
+	attr 194
+	bhvr 32
+endm
+
+** Snow gadget dropped
+scrp 3 8 36432 5
+	doif carr eq pntr
+		targ pntr
+		setv va00 posx
+		setv va01 posy
+		targ ownr
+		setv ov00 va00
+		setv ov01 va01
+	endi
+	attr 198
+	bhvr 33
+endm
+
+** Snow dispenser timer script (attr: invisible 16 + collide 64 + physics 128 = 208, CA 3 = water)
+scrp 1 1 36432 9
+	inst
+	setv va00 posl
+	setv va01 post
+	setv va02 ov00
+	new: simp 2 19 36432 "ols_snow2" 2 0 rand 10 100
+	attr 208
+	bhvr 0
+	perm 100
+	accg 0.05
+	aero 10
+	elas 10
+	fric 10
+	pose 1
+	mvsf va00 va01
+	emit 3 0.5
+	tick 40
+	doif va02 eq 1
+		velo rand -35 32 0
+	else
+		velo rand -20 31 0
+	endi
+	rnge 500
+	setv ov00 1
+	slow
+endm
+
+
+** Snow button script
+scrp 1 2 36432 500
+	lock
+	doif ov05 ne 1
+		part 2
+		anim [1 1 1]
+		setv ov05 1
+		enum 1 1 36432
+			tick 0
+		next
+		enum 2 19 36432
+			inst
+			doif targ ne null
+				kill targ
+			endi
+			slow
+		next
+		targ ownr
+		part 2
+		pose 0
+		anim [0 0]
+	else
+		part 2
+		anim [4 4 4]
+		setv ov05 0
+		enum 1 1 36432
+			tick 25
+		next
+		over
+		targ ownr
+		pose 3
+		anim [3 3]
+	endi
+	unlk
+endm
+
+
+** Snow timer script
+scrp 2 19 36432 9
+	lock
+	doif ov00 eq 1
+		pose 0
+		tick 700
+		setv ov00 0
+	else
+		kill ownr
+	endi
+	unlk
+endm
+
+** snow collision
+scrp 2 19 36432 6
+	doif ov00 eq 0
+		rnge 200
+		inst
+		esee 4 0 0
+			setv va05 chem 152
+			doif va05 lt 0.30
+				chem 152 0.05
+			endi
+		next
+		slow
+
+** Create a snowman! (attr: activateable 4 + collide 64 + physics 128 = 196, bhvr: activate 1)
+		doif rand 0 150 eq 150
+			setv va00 0
+			inst
+			esee 2 21 36432
+				addv va00 1
+			next
+			doif va00 lt 1
+				setv va01 posx
+				setv va02 post
+				subv va02 50
+				new: simp 2 21 36432 "ols_snow2" 2 2 rand 450 500
+				attr 196
+				bhvr 1
+				perm 100
+				accg 1.2
+				elas 30
+				fric 60
+				aero 1.1
+				mvsf va01 va02
+				tick rand 1800 2200
+				pose rand 0 1
+			endi
+			slow
+		endi
+
+		setv va01 grap posx posy
+		doif va01 ne -1
+			prop va01 2 0
+		endi
+
+		targ ownr
+		kill ownr
+	endi
+endm
+
+** snowman push
+scrp 2 21 36432 1
+	setv va00 pose
+	lock
+	anim [0 0 1 1 255]
+	stim writ from 97 1
+	wait 15
+	pose va00
+	unlk
+endm
+
+** snowman timer
+scrp 2 21 36432 9
+	setv va00 posx
+	setv va01 post
+	inst
+	reps 20
+		new: simp 2 19 36432 "ols_snow2" 2 0 rand 1000 1100
+		attr 208
+		bhvr 0
+		perm 100
+		accg 0.05
+		aero 10
+		elas 10
+		fric 10
+		pose 0
+		mvsf va00 va01
+		velo rand -10 10 rand -10 -1
+	repe
+	kill ownr
+endm
+
+**
+** Removal script
+**
+rscr
+enum 1 1 36432
+	kill targ
+next
+enum 1 2 36432
+	kill targ
+next
+enum 2 19 36432
+	kill targ
+next
+enum 2 21 36432
+	kill targ
+next
+enum 3 8 36432
+	kill targ
+next
+scrx 1 1 36432 9
+scrx 1 2 36432 500
+scrx 2 19 36432 9
+scrx 2 19 36432 6
+scrx 2 21 36432 1
+scrx 2 21 36432 9
+scrx 3 8 36432 1
+scrx 3 8 36432 5
+scrx 3 8 36432 9
+
+
+*rscr
+*enum 1 1 36432 kill targ next
+*enum 2 19 36432 kill targ next
+*enum 2 21 36432 kill targ next
+*enum 3 8 36432 kill targ next
+*scrx 1 1 36432 9
+*scrx 2 19 36432 9
+*scrx 2 19 36432 6
+*scrx 2 21 36432 1
+*scrx 2 21 36432 9
+*scrx 3 8 36432 1
+*scrx 3 8 36432 5
+*scrx 3 8 36432 9

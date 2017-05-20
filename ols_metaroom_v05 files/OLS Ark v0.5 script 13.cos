@@ -1,0 +1,101 @@
+**
+** Desert tree thing.
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_deserttree.agents"
+*# DS-Name "OLS Desert Tree"
+*# attach ols_deserttree2.c16
+*# desc = "A tree that spawns nuts."
+*# Agent Animation File = "ols_deserttree2.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_deserttree2"
+*
+*
+* 36440 = custom species number
+* Objects:
+* 2 4 36440 - Tree
+* 2 7 36440 - Flower
+* 2 3 36440 - Seed
+* Scripts:
+* 2 4 36440 1 - Tree dispenser
+* 2 4 36440 9 - Tree timer
+* 2 7 36440 9 - Flower timer
+* 2 3 36440 9 - Seed timer
+* 2 3 36440 12 - Seed eat
+*
+*
+*
+*
+
+** Create the tree (attr: invisible 16)
+new: simp 2 4 36440 "blnk" 1 0 0
+attr 16
+bhvr 0
+perm 100
+accg 30
+elas 0
+fric 100
+mvsf 31186 12808
+tick 1
+
+** The tree timer script
+scrp 2 4 36440 9
+	tick rand 400 500
+	setv va00 posl
+	setv va01 post
+* Create a flower (attr: invisible 16)
+	new: simp 2 7 36440 "ols_deserttree2" 1 1 rand 410 420
+	attr 16
+	bhvr 0
+	tick rand 800 1000
+	addv va00 rand 0 130
+	addv va01 rand 0 70
+	mvsf va00 va01
+endm
+
+* flower script: turn flower into seed
+scrp 2 7 36440 9
+	setv va00 posx
+	setv va01 posb
+* Create seed
+	new: simp 2 3 36440 "ols_deserttree2" 1 2 rand 400 600
+	attr 194
+	bhvr 48
+	tick 1200
+	perm 100
+	accg 1.2
+	elas 30
+	fric 60
+	aero 1.1
+	emit 7 1
+	mvsf va00 va01
+	targ ownr
+	kill ownr
+endm
+
+* Seed timer and eat script
+scrp 2 3 36440 9
+	kill ownr
+endm
+scrp 2 3 36440 12
+	stim writ from 77 1.2
+	kill ownr
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 2 3 36440 kill targ next
+*enum 2 4 36440 kill targ next
+*enum 2 7 36440 kill targ next
+*scrx 2 3 36440 9
+*scrx 2 3 36440 12
+*scrx 2 4 36440 1
+*scrx 2 4 36440 9
+*scrx 2 7 36440 9

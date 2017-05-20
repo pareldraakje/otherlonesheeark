@@ -1,0 +1,211 @@
+**
+** RAIN SCRIPT
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_rainmaker.agents"
+*# DS-Name "OLS Rainmaker"
+*# attach ols_rainmaker2.c16
+*# depend blnk.c16
+*# desc = "Random buttons so you and your creatures can make it rain."
+*# Agent Animation File = "ols_rainmaker2.c16"
+*# Agent Sprite First Image = 1
+*# Agent Animation Gallery = "ols_rainmaker2"
+*
+* 36438 = Custom species number
+* Objects:
+* 3 3 36438 - Dispenser
+* 2 24 36438 - Invisible rain patch
+* 2 7 36438 - Rain clouds
+* 2 19 36438 - Rain
+*
+* Scripts:
+* 3 3 36438 1 - Dispenser activation
+* 3 3 36438 3 - Dispenser hit
+* 2 7 36438 9 - Rain cloud timer
+* 2 19 36438 6 - Rain collision
+* 2 19 36438 9 - Rain timer
+*
+
+** Create the visible rain dispenser buttons (3 8: gadget, attr: activateable 4, bhvr: activateable 1 + hittable 8 = 9)
+* Tropics, corridor and navi
+new: simp 3 3 36438 "ols_rainmaker2" 4 1 200
+attr 4
+bhvr 9
+mvsf 32320 12633
+setv ov04 1
+anim [ 0 0 1 1 2 2 255 ]
+new: simp 3 3 36438 "ols_rainmaker2" 4 1 200
+attr 4
+bhvr 9
+mvsf 31781 12810
+setv ov04 2
+anim [ 0 0 1 1 2 2 255 ]
+new: simp 3 3 36438 "ols_rainmaker2" 4 1 200
+attr 4
+bhvr 9
+mvsf 32698 13121
+setv ov04 3
+anim [ 0 0 1 1 2 2 255 ]
+
+** Create the invisible rain spawn points (2 24: tool, attr: invisible 16 )
+* Tropics
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 32221 12563
+setv ov04 1
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 32221 12365
+setv ov04 1
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 31822 12403
+setv ov04 1
+* Corridor
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 32329 12742
+setv ov04 2
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 31987 12748
+setv ov04 2
+* Navi
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 33259 12986
+setv ov04 3
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 33113 13216
+setv ov04 3
+new: simp 2 24 36438 "blnk" 1 0 0
+attr 16
+bhvr 0
+mvsf 32577 13221
+setv ov04 3
+
+** Rain gadget push script
+scrp 3 3 36438 1
+	doif pose ne 3
+		pose 3
+		lock
+		attr 16
+		setv ov00 1
+		setv va00 ov04
+		stim writ from 90 1
+		enum 2 24 36438
+			doif ov04 eq va00
+				setv va01 posx
+				setv va02 posy
+* Create rain clouds (2 7: flower, attr: invisible 16 + collisions 64 + physics 128 = 208, ov00 = life)
+				new: simp 2 7 36438 "blnk" 1 0 rand 550 600
+				attr 208
+				bhvr 0
+				perm 100
+				accg -0.01
+				aero 0
+				elas 100
+				fric 0
+				tick 7
+				setv ov00 rand 300 500
+				setv va03 va01
+				addv va03 rand -30 30
+				mvsf va03 va02
+				velo -1.3 0
+				core -50 50 -1 1
+				new: simp 2 7 36438 "blnk" 1 0 rand 550 600
+				attr 208
+				bhvr 0
+				perm 100
+				accg -0.01
+				aero 0
+				elas 100
+				fric 0
+				tick 7
+				setv ov00 rand 300 500
+				setv va03 va01
+				addv va03 rand -30 30
+				mvsf va03 va02
+				velo 1.3 0
+				core -50 50 -1 1
+			endi
+		next
+		wait 400
+		targ ownr
+		attr 4
+		unlk
+		anim [ 0 0 1 1 2 2 255 ]
+	endi
+endm
+
+** Rain gadget hit script
+scrp 3 3 36438 3
+	stim writ from 92 1
+endm
+
+** Rain cloud timer script
+scrp 2 7 36438 9
+	inst
+	doif ov00 gt 0
+		subv ov00 tick
+* Create rain (2 19: weather, attr: invisible 16 + collisions 64 + physics 128 = 208)
+		reps 3
+			setv va01 posx
+			setv va02 posb
+			new: simp 2 19 36438 "ols_rainmaker2" 1 0 0
+			attr 208
+			bhvr 0
+			perm 100
+			accg 1
+			aero 0
+			elas 0
+			fric 0
+			doif rand 0 2 ne 0
+				emit 3 0.1
+			else
+				emit 4 0.1
+			endi
+			velo 0 1
+			addv va01 rand -60 60
+			mvsf va01 va02
+			tick rand 200 400
+		repe
+	else
+		kill ownr
+	endi
+endm
+
+** Rain timer script
+scrp 2 19 36438 9
+	kill ownr
+endm
+** Rain collide script
+scrp 2 19 36438 6
+	kill ownr
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 3 3 36438 kill targ next
+*enum 2 24 36438 kill targ next
+*enum 2 7 36438 kill targ next
+*enum 2 19 36438 kill targ next
+*scrx 3 3 36438 1
+*scrx 3 3 36438 3
+*scrx 2 7 36438 9
+*scrx 2 19 36438 6
+*scrx 2 19 36438 9

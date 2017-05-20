@@ -1,0 +1,117 @@
+**
+** LAVA DISPENSOR
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_lava2.agents"
+*# DS-Name "OLS Lava"
+*# attach ols_lava2.c16
+*# desc = "It's lava! Hot hotter hottest."
+*# Agent Animation File = "ols_lava2.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_lava2"
+*
+* 36434 = Custom species number
+* Objects:
+* 1 1 36434 - Invisible patch
+* 2 19 36434 - Lava particles
+* 3 8 36434 - Lava dispenser
+* 
+*
+* Scripts:
+* 1 1 36434 9 - Patch timer
+* 2 19 36434 9 - Lava timer
+* 3 8 36434 9 - Dispenser timer
+* 3 8 36434 1 - Dispenser activate 1
+* 3 8 36434 5 - Dispenser drop
+*
+
+* Create the invisible lava dispensers (attr: invisible 16)
+new: simp 1 1 36434 "ols_lava2" 1 1 1 attr 16 bhvr 0 mvsf 31131 13197 tick 25 setv ov00 1
+new: simp 1 1 36434 "ols_lava2" 1 1 1 attr 16 bhvr 0 mvsf 31237 13539 tick 25 setv ov00 2
+new: simp 1 1 36434 "ols_lava2" 1 1 1 attr 16 bhvr 0 mvsf 31497 13527 tick 25 setv ov00 3
+
+** Create the lava gadget (attr: mouseable 2 + activateable 4 + collide 64 + physics 128 = 198, bhvr: activate 1 + pickup 32 = 33)
+new: simp 3 8 36434 "ols_lava2" 7 2 880 attr 198 bhvr 33
+perm 100 accg 1.5 aero 20 elas 0 fric 80
+setv ov00 31684 setv ov01 13467 mvsf ov00 ov01 tick 5000
+
+** lava gadget timer script
+scrp 3 8 36434 9
+doif carr eq null
+  mvsf ov00 ov01
+  velo 0 10
+endi
+endm
+
+** lava gadget activate 1
+scrp 3 8 36434 1
+stim writ from 90 1
+doif carr eq null
+attr 192 bhvr 0 lock
+anim [1 2 3 4 5 255]
+wait 5
+reps 50
+targ ownr setv va00 posx setv va01 posy
+  new: simp 2 19 36434 "ols_lava2" 2 0 rand 10 100 attr 208 bhvr 0 setv ov00 1
+  perm 100 accg -0.05 aero 10 elas 10 fric 10 pose 1 mvsf va00 va01 emit 2 0.1 tick 1
+  velo rand -15 15 rand 0 4
+  wait 1
+repe
+targ ownr pose 0
+unlk attr 198 bhvr 33
+else anim [1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 0]
+endi
+endm
+
+** lava gadget dropped
+scrp 3 8 36434 5
+  doif carr eq pntr
+   targ ownr
+   setv ov00 posx setv ov01 posy
+  endi
+endm
+
+
+** Dispenser timer script
+scrp 1 1 36434 9
+  setv va00 posl setv va01 post setv va02 ov00
+* Create some hot lava (attr: invisible 16 + collisions 64 + physics 128 = 208, CA 2 = heat)
+  new: simp 2 19 36434 "ols_lava2" 2 0 rand 10 100 attr 208 bhvr 0 
+  perm 100 accg -0.05 aero 10 elas 10 fric 10 pose 1 mvsf va00 va01 emit 2 0.1 tick 20
+  doif va02 eq 1 velo rand -10 10 -4 else velo rand -10 10 -4 endi setv ov00 1
+endm
+
+** Lava timer script
+scrp 2 19 36434 9
+  doif ov00 eq 0 kill ownr
+  else
+    pose 0 tick 600 setv ov00 0
+    etch 4 0 0 
+      * Stim peak of heat
+      stim writ from 58 1
+      * inject CA heat
+      chem 167 10
+      * inject hotness drive
+      chem 153 0.3
+      * inject some water (cuz otherwise they'll get dehydrated and scared.)
+      chem 33 0.1
+    next
+  endi
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 2 19 36434 kill targ next
+*enum 1 1 36434 kill targ next
+*enum 3 8 36434 kill targ next
+*scrx 2 19 36434 9
+*scrx 1 1 36434 9
+*scrx 3 8 36434 1
+*scrx 3 8 36434 5
+*scrx 3 8 36434 9

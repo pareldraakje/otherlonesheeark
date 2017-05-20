@@ -1,0 +1,177 @@
+**
+** PEAR PLANT
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_pearplant.agents"
+*# DS-Name "OLS Pear Plant"
+*# attach ols_pearplant.c16
+*# desc = "Watch your pears man. Yolo."
+*# Agent Animation File = "ols_pearplant.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_pearplant"
+*
+*
+* 36452 = Custom species number
+* Objects:
+* 1 1 36452 - Invisible patch
+* 2 7 36452 - pear stump
+* 2 8 36452 - pear
+*
+* Scripts:
+* 1 1 36452 9 - Patch plant timer
+* 2 7 36452 9 - pearplant timer
+* 2 8 36452 4 - pear pickup
+* 2 8 36452 6 - pear collision
+* 2 8 36452 9 - pear timer
+* 2 8 36452 12 - pear eat event
+*
+
+** Create the invisible patch (attr: invisible 16)
+new: simp 1 1 36452 "ols_food" 1 23 1
+attr 16
+bhvr 0
+rnge 500
+mvsf 31071 12648
+tick 1
+
+** The timer script
+scrp 1 1 36452 9
+	tick rand 800 1200
+	setv va00 posl
+	setv va01 post
+	setv va02 0
+	setv va04 0
+	esee 2 7 36452
+		addv va02 1
+	next
+	inst
+	doif va02 lt 3
+* Create a pearplant (attr: invisible 16 + collide 64 + physics 128 = 208 )
+		new: simp 2 7 36452 "ols_pearplant" 13 0 rand 410 420
+		attr 208
+		bhvr 0
+		perm 100
+		accg 1.2
+		elas 0
+		fric 100
+		rnge 60
+		setv ov00 0
+		mira rand 0 1
+		tick 5
+		addv va00 rand 0 300
+		mvsf va00 va01
+		setv va03 0
+	endi
+endm
+
+* pearplant script
+
+scrp 2 7 36452 9
+	inst
+	tick rand 300 440
+	addv ov00 1
+	setv va02 mira
+	setv va04 0
+
+	doif ov00 eq 1
+		esee 2 7 36452
+			addv va03 1
+		next
+		doif va03 gt 0
+			setv va04 1
+			enum 1 1 36452
+				tick 5
+			next
+		endi
+	elif ov00 lt 7
+		pose ov00
+	elif ov00 ge 7 and ov00 lt 10
+* Create pear (attr: carry 2 + collide 64 + physics 128 = 194 )
+		setv va00 posx
+		setv va01 post
+		new: simp 2 8 36452 "ols_pearplant" 3 13 rand 400 600
+		attr 194
+		bhvr 48
+		core 0 32 0 32
+		perm 100
+		accg 1.2
+		elas 30
+		fric 100
+		aero 1.1
+		emit 6 0.7
+		mira va02
+
+		velo rand -2 2 rand -1 0
+		mvsf va00 va01
+		tick 1200
+		setv ov01 0
+
+		targ ownr
+		tick rand 1000 1200
+		anim [6 6 6 7 7 7 8 8 8 9 9 9 3 3 3 4 4 4 5]
+
+	elif ov00 ge 9
+		lock
+		pose 10
+		wait 50
+		pose 11
+		wait 50
+		kill ownr
+		unlk
+	endi
+
+	doif va04 eq 1
+		kill ownr
+	endi
+
+endm
+
+* Pear pickup, pear collision, pear timer and eat script.
+scrp 2 8 36452 4
+	doif pose lt 2
+		pose 0
+	endi
+endm
+scrp 2 8 36452 6
+	doif ov01 eq 0
+		mira rand 0 1
+		setv ov01 1
+	endi
+	doif pose lt 2
+		pose 1
+	endi
+endm
+scrp 2 8 36452 9
+	doif carr eq null
+		kill ownr
+	endi
+endm
+scrp 2 8 36452 12
+	lock
+	stim writ from 78 1.2
+	doif pose lt 2
+		pose 2
+		wait 15
+	else
+		kill ownr
+	endi
+	unlk
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 1 1 36452 kill targ next
+*enum 2 8 36452 kill targ next
+*enum 2 7 36452 kill targ next
+*scrx 1 1 36452 9
+*scrx 2 8 36452 4
+*scrx 2 8 36452 6
+*scrx 2 8 36452 9
+*scrx 2 8 36452 12
+*scrx 2 7 36452 9

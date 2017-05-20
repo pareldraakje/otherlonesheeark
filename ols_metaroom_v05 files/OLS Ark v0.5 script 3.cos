@@ -1,0 +1,565 @@
+**
+** CA EMITTERS, SIGNPOST, ELEVATORS
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_caemitters.agents"
+*# DS-Name "OLS CA Emitters"
+*# depend blnk.c16
+*# attach ols_favicon.c16 
+*# attach ols_lift2.c16
+*# desc = "Heat! Light! Nutrients!"
+*# Agent Animation File = "ols_favicon.c16"
+*# Agent Sprite First Image = 1
+*# Agent Animation Gallery = "ols_favicon"
+*
+
+
+********************
+**    Favicon     **
+********************
+
+new: simp 1 3 36437 "ols_favicon" 1 0 1
+attr 272
+mvto 32017 12564
+cmrp posx posy 0
+tick 10
+
+
+********************
+** Light Emitters **
+********************
+** Desert
+** Up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 0.95
+mvto 31224 12523
+** Lower left
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 0.8
+mvto 30917 12811
+** Lower right 
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 31436 12761
+**Tropics
+** Bigtree 
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 31817 12487
+** Dome
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 32233 12385
+**Hallway down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 32090 13004
+** Volcano down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 31510 13328
+** navi down crystal
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 33388 13323
+** Arctic up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 1 1
+mvto 32936 12487
+
+
+********************
+** Heat emitters **
+********************
+**Tropics
+** Lower
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 31933 12659
+** Dome
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 32233 12385
+** Desert
+** Up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 1
+mvto 31415 12669
+** Down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 1
+mvto 31076 12852
+** Hallway
+** mid
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 31937 12865
+** low
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 31953 12982
+** Navi
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 33210 13040
+** low
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 32881 13274
+** Volcano
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 1
+mvto 31131 13151
+** low
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 1
+mvto 31340 13405
+** Water
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 2 0.95
+mvto 31968 13613
+
+********************
+** Moisture emitters **
+********************
+**Tropics
+** Lower
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 31933 12659
+** Dome
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 32233 12385
+** Desert
+** Up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 0.5
+mvto 31415 12669
+** Down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 0.5
+mvto 31076 12852
+** Hallway
+** mid
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 31937 12865
+** low
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 31953 12982
+** Navi
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 33210 13040
+** lowl
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 32854 13376
+** lowr
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 33487 13357
+** Volcano
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 0.7
+mvto 31131 13151
+** low
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 0.7
+mvto 31340 13405
+** ice
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 32938 12642
+** down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 3 1
+mvto 33120 12737
+
+********************
+** Nutrient emitters **
+********************
+**Tropics
+** Lower
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 31933 12659
+** Dome
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 32171 12496
+** Desert
+** Up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 0.5
+mvto 31415 12669
+** Down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 0.5
+mvto 31076 12852
+** Hallway
+** mid
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 31937 12865
+** low
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 31953 12982
+** Navi
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 33003 13130
+** lowl
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 32854 13376
+** lowr
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 1
+mvto 33487 13357
+** ice
+** up
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 0.8
+mvto 32657 12624
+** down
+new: simp 1 1 36437 "blnk" 1 0 0
+attr 16
+emit 4 0.8
+mvto 33120 12737
+
+********************
+**      Lifts     **
+********************
+
+* desert
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 31013 12629
+setv ov01 room targ
+setv ov00 1
+setv va00 grap posx posb
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 31013 12887
+setv ov01 room targ
+setv ov00 1
+setv va01 grap posx posb
+link va00 va01 1
+
+* tropics
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 32133 12476
+setv ov01 room targ
+setv ov00 2
+setv va00 grap posx posb
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 32133 12659
+setv ov01 room targ
+setv ov00 2
+setv va01 grap posx posb
+link va00 va01 1
+
+*arctic
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 33061 12608
+setv ov01 room targ
+setv ov00 3
+setv va00 grap posx posb
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 33061 12794
+setv ov01 room targ
+setv ov00 3
+setv va01 grap posx posb
+link va00 va01 1
+
+*volcano
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 31038 13144
+setv ov01 room targ
+setv ov00 4
+setv va00 grap posx posb
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 31038 13506
+setv ov01 room targ
+setv ov00 4
+setv va01 grap posx posb
+link va00 va01 1
+
+*navi
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 33145 13132
+setv ov01 room targ
+setv ov00 5
+setv va00 grap posx posb
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 33145 13359
+setv ov01 room targ
+setv ov00 5
+setv va01 grap posx posb
+link va00 va01 1
+
+*corridor
+new: vhcl 3 1 36437 "ols_lift2" 4 0 0
+attr 4
+bhvr 3
+mvto 31923 12663
+setv ov01 room targ
+setv ov00 6
+setv va00 grap posx posb
+seta va99 targ
+
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 31923 12838
+setv ov01 room targ
+setv ov00 6
+setv va01 grap posx posb
+new: vhcl 3 1 36437 "ols_lift2" 3 0 0
+attr 4
+bhvr 3
+mvto 31923 13084
+setv ov01 room targ
+setv ov00 6
+setv va02 grap posx posb
+link va00 va01 1
+link va01 va02 1
+
+
+********************
+** Lift disabler  **
+********************
+
+* attr: activateable 4 + invisible 16 = 20
+new: simp 1 2 36437 "ols_lift2" 2 4 1800
+attr 20
+bhvr 0
+mvto 31887 12517
+seta ov00 va99
+setv ov01 va00
+setv ov02 va01
+
+********************
+**    Scripts     **
+********************
+
+* Lift disabler push script
+
+scrp 1 2 36437 1
+	setv va00 6
+	doif pose eq 0
+		pose 1
+		link ov01 ov02 0
+		targ ov00
+		setv ov99 ov00
+		setv ov00 999
+		pose 3
+		attr 16
+	else
+		pose 0
+		link ov01 ov02 1
+		targ ov00
+		setv ov00 ov99
+		pose 0
+		attr 4
+	endi
+endm
+
+* push: go up
+scrp 3 1 36437 1
+	inst
+	seta va00 from
+	setv va01 posy
+	setv va02 ov00
+	setv va03 0
+	doif va00 ne null
+		targ va00
+		doif fmly eq 4
+			stim writ va00 75 1
+			targ ownr
+			pose 2
+			wait 5
+			enum 3 1 36437
+				doif va02 eq ov00
+					doif posy < va01
+						addv va03 1
+						doif va03 > 1
+							setv va08 posy
+							seta va09 targ
+							targ va04
+							doif posy < va08
+								seta va04 va09
+							endi
+						else
+							seta va04 targ
+						endi
+					endi
+				endi
+			next
+			doif va03 ge 1
+				stim writ va00 75 1
+				targ va04
+				setv va05 posx
+				setv va06 posb
+				targ va00
+				mvft va05 va06
+				stim writ va00 94 1
+				urge writ va00 26 -2 -1 2
+				wait 5
+			else
+				stim writ va00 0 1
+			endi
+			targ ownr
+			pose 0
+		endi
+	endi
+endm
+
+* pull: go down
+
+scrp 3 1 36437 2
+	inst
+	seta va00 from
+	setv va01 posy
+	setv va02 ov00
+	setv va03 0
+	doif va00 ne null
+		targ va00
+		doif fmly eq 4
+			stim writ va00 75 1
+			targ ownr
+			pose 1
+			wait 5
+			setv va03 0
+			enum 3 1 36437
+				doif va02 eq ov00
+					doif posy > va01
+						addv va03 1
+						doif va03 > 1
+							setv va08 posy
+							seta va09 targ
+							targ va04
+							doif posy > va08
+								seta va04 va09
+							endi
+						else
+							seta va04 targ
+						endi
+					endi
+				endi
+			next
+			doif va03 ge 1
+				targ va04
+				setv va05 posx
+				setv va06 posb
+				targ va00
+				mvft va05 va06
+				stim writ va00 94 1
+				urge writ va00 26 -2 -1 2
+				wait 5
+			else
+				stim writ va00 0 1
+			endi
+			targ ownr
+			pose 0
+		endi
+	endi
+endm
+
+
+**
+** Removal script
+**
+
+*rscr
+**favplace
+*subv game "ds_favourites" 1
+*enum 1 3 36437 	kill targ next
+*enum 1 4 36437 setv va00 ov50 kill targ 
+*  enum 1 4 0
+*    doif ov50 > va00
+*      setv va01 ov50 subv va01 1 setv ov50 va01
+*      setv va02 ov50 mulv va02 50 addv va02 145 flto va02 0
+*    endi
+*  next
+*next
+*cmrp 6268 8936 0
+**emitters
+*enum 1 1 36437 kill targ next
+**lifts
+*enum 3 1 36437 kill targ next

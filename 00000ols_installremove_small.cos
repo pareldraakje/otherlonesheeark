@@ -1,0 +1,546 @@
+*
+* CAOS2PRAY CHUNK
+*
+*# Pray-File "ols_metaroom_v05.agents"
+*# DS-Name "OLS Ark v0.5"
+*# desc = "Injecting this will add the ark of the Other Lone Shee to your world. Enjoy!"
+*# Agent Animation File = "ols_favicon.c16"
+*# Agent Sprite First Image = 1
+*# Agent Animation Gallery = "ols_favicon"
+*# Web URL = "http://creaturescaves.com/"
+*# Web Label = "Pilla @ CC"
+
+*# depend blnk.c16
+*# depend training_dummy.c16
+*# depend robot_toy.c16
+*# depend tuba.c16
+*# depend mini_vendor.c16
+
+*# attach otherloneshee_ark3.blk
+*# attach ols_donutfruit.c16
+*# attach ols_favicon.c16
+*# attach ols_lift2.c16
+*# attach ols_food.c16
+*# attach ols_icebush.c16
+*# attach ols_icetree.c16
+*# attach ols_lava2.c16
+*# attach ols_snow2.c16
+*# attach ols_snowbutton.c16
+*# attach ols_rainmaker2.c16
+*# attach ols_tardipebble.c16
+*# attach ols_volcanobush.c16
+*# attach ols_deserttree2.c16
+*# attach ols_metadoors.c16
+*# attach ols_mushrooms.c16
+*# attach ols_volcanoseed.c16
+*# attach ols_junglelife.c16
+*# attach ols_junglestuff.c16
+*# attach ols_jungletree.c16
+*# attach ols_pearplant.c16
+*# attach ols_teleporter.c16
+*# attach ols_help_v05.catalogue
+
+*# link 00001ols_map_small.cos 36437ols_caemitterssignpost.cos 36430ols_icebush.cos 36431ols_icetree.cos 36432ols_snow.cos 36433ols_tropicnuts.cos 36434ols_lava.cos 36435ols_fruitplant.cos 36436ols_donutfruit.cos 36438ols_rainmaker.cos 36439ols_tardipebble.cos 36440ols_deserttree.cos 36441ols_volcanobush.cos 36442ols_metadoors.cos 36443ols_mushrooms.cos 36444ols_volcanoseed.cos 36445ols_trainingdummy.cos 36446ols_jellyfish.cos 36447ols_tetrafish.cos 36448ols_junglestuff.cos 36449ols_eywa.cos 36450ols_jungletree.cos 36451ols_carrots.cos 36452ols_pearplant.cos 36453ols_teleporter.cos 00002ols_extras.cos
+
+*
+*
+* Removal scripts
+*
+*
+
+rscr
+
+**
+** Ice bush
+**
+
+enum 2 11 36430
+	kill targ
+next
+enum 2 7 36430
+	kill targ
+next
+enum 2 4 36430
+	kill targ
+next
+scrx 2 11 36430 9
+scrx 2 11 36430 12
+scrx 2 4 36430 1
+scrx 2 4 36430 9
+scrx 2 7 36430 9
+
+**
+** Ice tree
+**
+
+enum 2 8 36431
+	kill targ
+next
+enum 2 7 36431
+	kill targ
+next
+enum 2 4 36431
+	kill targ
+next
+scrx 2 8 36431 9
+scrx 2 8 36431 12
+scrx 2 4 36431 1
+scrx 2 4 36431 9
+scrx 2 7 36431 9
+
+**
+** Snow
+**
+
+enum 1 1 36432
+	kill targ
+next
+enum 2 19 36432
+	kill targ
+next
+enum 2 21 36432
+	kill targ
+next
+enum 3 8 36432
+	kill targ
+next
+scrx 1 1 36432 9
+scrx 2 19 36432 9
+scrx 2 19 36432 6
+scrx 2 21 36432 1
+scrx 2 21 36432 9
+scrx 3 8 36432 1
+scrx 3 8 36432 5
+scrx 3 8 36432 9
+
+**
+** Greenhouse nuts
+**
+
+enum 1 1 36433
+	kill targ
+next
+enum 2 3 36433
+	kill targ
+next
+enum 2 7 36433
+	kill targ
+next
+scrx 1 1 36433 9
+scrx 2 3 36433 4
+scrx 2 3 36433 6
+scrx 2 3 36433 9
+scrx 2 3 36433 12
+scrx 2 7 36433 9
+
+**
+** Lava
+**
+
+enum 2 19 36434
+	kill targ
+next
+enum 1 1 36434
+	kill targ
+next
+enum 3 8 36434
+	kill targ
+next
+scrx 2 19 36434 9
+scrx 1 1 36434 9
+scrx 3 8 36434 1
+scrx 3 8 36434 5
+scrx 3 8 36434 9
+
+**
+** Yarn fruit
+**
+
+enum 1 1 36435
+	kill targ
+next
+enum 2 8 36435
+	kill targ
+next
+enum 2 7 36435
+	kill targ
+next
+scrx 1 1 36435 9
+scrx 2 8 36435 4
+scrx 2 8 36435 6
+scrx 2 8 36435 9
+scrx 2 8 36435 12
+scrx 2 7 36435 9
+
+**
+** Donutfruit
+**
+
+enum 2 4 36436
+	kill targ
+next
+enum 2 11 36436
+	kill targ
+next
+enum 2 3 36436
+	kill targ
+next
+enum 1 1 36436
+	kill targ
+next
+scrx 2 4 36436 9
+scrx 2 11 36436 9
+scrx 2 11 36436 12
+scrx 2 3 36436 9
+scrx 2 3 36436 12
+scrx 1 1 36436 9
+
+**
+** CA emitters, lifts and signpost
+**
+
+* signpost
+subv game "ds_favourites" 1
+enum 1 3 36437
+	kill targ
+next
+enum 1 4 36437
+	setv va00 ov50
+	kill targ
+	enum 1 4 0
+		doif ov50 > va00
+			setv va01 ov50
+			subv va01 1
+			setv ov50 va01
+			setv va02 ov50
+			mulv va02 50
+			addv va02 145
+			flto va02 0
+		endi
+	next
+next
+cmrp 6268 8936 0
+* emitters
+enum 1 1 36437
+	kill targ
+next
+* lifts
+enum 3 1 36437
+	kill targ
+next
+
+*lift hider
+enum 1 2 36437
+	kill targ
+next
+scrx 1 2 36437 1
+scrx 1 2 36437 2
+scrx 3 1 36437 1
+
+**
+** Rain maker
+**
+
+enum 3 3 36438
+	kill targ
+next
+enum 2 24 36438
+	kill targ
+next
+enum 2 7 36438
+	kill targ
+next
+enum 2 19 36438
+	kill targ
+next
+scrx 3 3 36438 1
+scrx 3 3 36438 3
+scrx 2 7 36438 9
+scrx 2 19 36438 6
+scrx 2 19 36438 9
+
+**
+** Tardigrades and pebble
+**
+
+enum 2 23 36439
+	kill targ
+next
+enum 2 15 36439
+	kill targ
+next
+enum 2 21 36439
+	kill targ
+next
+scrx 2 23 36439 1
+scrx 2 23 36439 2
+scrx 2 23 36439 3
+scrx 2 15 36439 9
+scrx 2 15 36439 1
+scrx 2 15 36439 3
+scrx 2 15 36439 12
+scrx 2 21 36439 1
+scrx 2 21 36439 2
+scrx 2 21 36439 3
+
+**
+** Desert tree
+**
+
+enum 2 3 36440
+	kill targ
+next
+enum 2 4 36440
+	kill targ
+next
+enum 2 7 36440
+	kill targ
+next
+scrx 2 3 36440 9
+scrx 2 3 36440 12
+scrx 2 4 36440 1
+scrx 2 4 36440 9
+scrx 2 7 36440 9
+
+**
+** Volcano bush
+**
+
+enum 2 8 36441
+	kill targ
+next
+enum 2 4 36441
+	kill targ
+next
+enum 2 7 36441
+	kill targ
+next
+scrx 2 8 36441 9
+scrx 2 8 36441 12
+scrx 2 4 36441 1
+scrx 2 4 36441 9
+scrx 2 7 36441 9
+
+**
+** Metaroom inner doors
+**
+enum 2 2 36442
+	kill targ
+next
+scrx 2 2 36442 1
+
+**
+** Mushrooms
+**
+enum 1 1 36443
+	kill targ
+next
+enum 2 3 36443
+	kill targ
+next
+enum 2 11 36443
+	kill targ
+next
+scrx 1 1 36443 9
+scrx 2 3 36443 9
+scrx 2 3 36443 12
+scrx 2 11 36443 9
+scrx 2 11 36443 12
+
+**
+** Volcano seed
+**
+enum 2 3 36444
+	kill targ
+next
+enum 1 1 36444
+	kill targ
+next
+scrx 1 1 36444 9
+scrx 2 3 36444 9
+scrx 2 3 36444 12
+
+**
+** Training dummy
+**
+
+enum 2 21 36445
+	kill targ
+next
+scrx 2 21 36445 1
+scrx 2 21 36445 2
+scrx 2 21 36445 3
+scrx 2 21 36445 0
+
+**
+** Jellyfish
+**
+
+enum 1 1 36446
+	kill targ
+next
+enum 2 15 36446
+	kill targ
+next
+scrx 1 1 36446 9
+scrx 2 15 36446 9
+scrx 2 15 36446 1
+scrx 2 15 36446 3
+scrx 2 15 36446 12
+
+**
+** Tetrafish
+**
+
+enum 1 1 36447
+	kill targ
+next
+enum 2 15 36447
+	kill targ
+next
+scrx 1 1 36447 9
+scrx 2 15 36447 9
+scrx 2 15 36447 1
+scrx 2 15 36447 3
+scrx 2 15 36447 12
+
+**
+** Junglestuff removal
+**
+
+enum 1 1 36448
+	kill targ
+next
+enum 2 21 36448
+	kill targ
+next
+enum 2 8 36448
+	kill targ
+next
+enum 2 7 36448
+	kill targ
+next
+scrx 2 21 36448 1
+scrx 1 1 36448 9
+scrx 2 3 36448 9
+scrx 2 3 36448 12
+scrx 2 7 36448 9
+
+**
+** Eywa
+**
+enum 1 1 36449
+	kill targ
+next
+enum 2 15 36449
+	kill targ
+next
+scrx 1 1 36449 9
+scrx 2 15 36449 9
+scrx 2 15 36449 1
+scrx 2 15 36449 3
+scrx 2 15 36449 12
+
+**
+** Jungle tree
+**
+
+enum 2 3 36450
+	kill targ
+next
+enum 2 4 36450
+	kill targ
+next
+enum 2 7 36450
+	kill targ
+next
+scrx 2 3 36450 9
+scrx 2 3 36450 12
+scrx 2 4 36450 1
+scrx 2 4 36450 9
+scrx 2 7 36450 9
+
+**
+** Carrots
+**
+
+enum 1 1 36451
+	kill targ
+next
+enum 2 8 36451
+	kill targ
+next
+enum 2 7 36451
+	kill targ
+next
+scrx 1 1 36451 9
+scrx 2 8 36451 4
+scrx 2 8 36451 6
+scrx 2 8 36451 9
+scrx 2 8 36451 12
+scrx 2 7 36451 9
+
+**
+** Pear plant
+**
+
+enum 1 1 36452
+	kill targ
+next
+enum 2 8 36452
+	kill targ
+next
+enum 2 7 36452
+	kill targ
+next
+scrx 1 1 36452 9
+scrx 2 8 36452 4
+scrx 2 8 36452 6
+scrx 2 8 36452 9
+scrx 2 8 36452 12
+scrx 2 7 36452 9
+
+**
+** Teleporter
+**
+
+enum 2 2 36453
+	kill targ
+next
+scrx 2 2 36453 1
+
+**
+** Metaroom removal
+**
+
+*cmrp 6268 8936 0
+*setv va00 gmap 32179 13118
+*doif va00 <> -1
+*	inst
+* Check for any agents in the metaroom
+*	enum 0 0 0
+*		doif gmap posx posy = va00
+
+* not the hand
+*			doif fmly eq 2 and gnus ne 1
+*				kill targ
+* not creature eggs
+*			else
+*				doif fmly eq 3 and gnus ne 4
+*					kill targ
+* not UI
+*				else
+*					doif fmly eq 1 and gnus ne 2
+*						kill targ
+*					else
+*						setv va32 attr
+*						andv va32 32
+*						doif va32 ne 32
+*							mvsf 1126 9449
+*						endi
+*					endi
+*				endi
+*			endi
+*		endi
+*	next
+* endi

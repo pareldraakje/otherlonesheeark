@@ -1,0 +1,93 @@
+*
+* Add some random robot toys
+*
+new: simp 2 21 20 "robot_toy" 23 0 2000
+attr 199
+bhvr 43
+elas 20
+accg 3
+aero 10
+fric 70
+perm 60
+puhl -1 25 50
+setv ov10 rand 0 1
+doif ov10 eq 0
+	setv ov10 -1
+endi
+doif ov10 lt 0
+	pose 0
+else
+	pose 12
+endi
+mvsf 31079 12816
+
+new: simp 2 21 20 "robot_toy" 23 0 2000
+attr 199
+bhvr 43
+elas 20
+accg 3
+aero 10
+fric 70
+perm 60
+puhl -1 25 50
+setv ov10 rand 0 1
+doif ov10 eq 0
+	setv ov10 -1
+endi
+doif ov10 lt 0
+	pose 0
+else
+	pose 12
+endi
+mvsf 31839 12610
+
+new: simp 2 21 20 "robot_toy" 23 0 2000
+attr 199
+bhvr 43
+elas 20
+accg 3
+aero 10
+fric 70
+perm 60
+puhl -1 25 50
+setv ov10 rand 0 1
+doif ov10 eq 0
+	setv ov10 -1
+endi
+doif ov10 lt 0
+	pose 0
+else
+	pose 12
+endi
+mvsf 32954 13332
+
+*
+** Add tubas in desert
+*
+reps 10
+*create some seeds
+	new: simp 2 3 16 "tuba" 16 66 305
+	attr 194
+	bhvr 48
+	elas 0
+	aero 1
+	perm 40
+	anim [0 1 2 3 4 5 6 7 255]
+	emit 7 0.5
+	mvto 30849 12793
+	velo rand -10 10 rand 0 -10
+	tick rand 30 60
+repe
+
+
+*
+* Add a mini empathic vendor in the navi area
+*
+new: comp 2 23 9 "mini_vendor" 23 0 3000
+attr 198
+perm 60
+accg 5
+elas 0
+bhvr 3
+anim [0 1 2 3 4 5 6 7 8 9 10 11 255]
+mvto 33021 13333

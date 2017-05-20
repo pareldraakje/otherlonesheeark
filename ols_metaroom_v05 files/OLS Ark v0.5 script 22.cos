@@ -1,0 +1,128 @@
+**
+** Eywa floater things.
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_eywa.agents"
+*# DS-Name "OLS Eywa."
+*# attach ols_junglelife.c16
+*# desc = "An Eywa floating thingie."
+*# Agent Animation File = "ols_junglelife.c16"
+*# Agent Sprite First Image = 1
+*# Agent Animation Gallery = "ols_junglelife"
+*
+*
+* 36449 = Custom species number
+* Objects:
+* 1 1 36449 - Eywa dispenser
+* 2 15 36449 - Eywa
+
+* Scripts:
+* 1 1 36449 9 - Eywa dispenser timer
+* 2 15 36449 9 - Eywa timer
+* 2 15 36449 1 - Eywa act1
+* 2 15 36449 3 - Eywa hit
+* 2 15 36449 12 - Eywa eat
+*
+
+new: simp 1 1 36449 "blnk" 1 0 1
+attr 16
+bhvr 0
+setv ov00 9000
+setv ov01 5
+rnge 1999
+mvto 33549 13140
+tick 1
+
+scrp 1 1 36449 9
+	setv va00 0
+	setv va01 ov00
+	tick 1500
+	esee 2 15 36449
+		addv va00 1
+	next
+
+	setv va03 posx
+	addv va03 rand -200 0
+	setv va04 posy
+	addv va04 rand -100 120
+	doif va00 lt ov01
+* attr: mouseable 2 + activateable 4 + collisions 64 + physics 128 = 198, bhvr: activateable 1 + hittable 8 + eatable 16 + pickuppable 32 = 57)
+		new: simp 2 15 36449 "ols_junglelife" 3 4 800
+		attr 198
+		bhvr 57
+		tick 10
+		perm 100
+		accg 0
+		elas 50
+		fric 30
+		aero 2
+		anim [ 0 0 0 0 0 1 1 1 1 1 2 2 2 2 2 1 1 1 1 1 255 ]
+		setv ov00 va01
+		mvsf va03 va04
+	endi
+endm
+
+
+scrp 2 15 36449 9
+** Eywa timer
+	subv ov00 tick
+	tick rand 30 50
+	doif ov00 gt 70
+		inst
+*velx
+		addv velx rand -1 1
+		doif obst rght le 50
+			addv velx rand -1 0
+		elif obst left le 50
+			addv velx rand 0 1
+		endi
+*vely
+		doif obst down le 40
+			addv vely rand -1 0
+		elif obst _up_ le 20
+			addv vely rand 0 1
+		else
+			addv vely rand -1 1
+		endi
+	else
+		kill ownr
+	endi
+endm
+
+* Eywa act1, hit and eat
+
+scrp 2 15 36449 1
+	stim writ from 86 1
+	tick 1
+endm
+scrp 2 15 36449 3
+	stim writ from 87 1
+	tick 1
+endm
+scrp 2 15 36449 12
+	lock
+	stim writ from 80 1
+	wait 10
+	kill ownr
+	unlk
+endm
+
+
+
+
+*rscr
+*enum 1 1 36449
+*	kill targ
+*next
+*enum 2 15 36449
+*	kill targ
+*next
+*scrx 1 1 36449 9
+*scrx 2 15 36449 9
+*scrx 2 15 36449 1
+*scrx 2 15 36449 3
+*scrx 2 15 36449 12

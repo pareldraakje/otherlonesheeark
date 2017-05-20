@@ -1,0 +1,147 @@
+**
+** Fish.
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_junglelife.agents"
+*# DS-Name "OLS Jellyfish"
+*# attach ols_junglelife.c16
+*# desc = "A jellyfish."
+*# Agent Animation File = "ols_junglelife.c16"
+*# Agent Sprite First Image = 1
+*# Agent Animation Gallery = "ols_junglelife"
+*
+*
+* 36439 = Custom species number
+* Objects:
+* 1 1 36446 - Fish dispenser
+* 2 15 36446 - Fish
+
+* Scripts:
+* 1 1 36446 9 - Fish dispenser timer
+* 2 15 36446 9 - Fish timer
+* 2 15 36446 1 - Fish act1
+* 2 15 36446 3 - Fish hit
+* 2 15 36446 12 - Fish eat
+*
+
+new: simp 1 1 36446 "blnk" 1 0 1
+attr 16
+bhvr 0
+setv ov00 0
+setv ov01 2
+mvto 32005 13401
+tick 1
+
+scrp 1 1 36446 9
+	tick 200
+	rnge 500
+	setv va00 ov00
+	esee 2 15 36446
+		doif ov00 eq va00
+			addv va01 1
+		endi
+	next
+	doif va00 eq 0
+		setv va02 0
+	elif va00 eq 1
+		setv va02 2
+	endi
+
+	setv va03 posx
+	setv va04 posy
+	doif va01 lt ov01
+* attr: mouseable 2 + activateable 4 + collisions 64 + physics 128 = 198, bhvr: activateable 1 + hittable 8 + eatable 16 + picuppable 32 = 57)
+		new: simp 2 15 36446 "ols_junglelife" 2 va02 800
+		attr 198
+		bhvr 57
+		tick 10
+		perm 100
+		accg 0
+		elas 50
+		fric 30
+		aero 5
+		setv ov00 va00
+		mvsf va03 va04
+	endi
+endm
+
+
+scrp 2 15 36446 9
+** Fish timer
+	tick rand 40 70
+	inst
+*velx
+	doif accg eq 0
+		setv velx rand -1 1
+		doif obst rght le 50
+			setv velx rand -1 0
+		elif obst left le 50
+			setv velx rand 0 1
+		endi
+*vely
+		doif obst down le 30
+			setv vely rand 0 -1
+		elif obst _up_ le 30
+			setv vely rand 0 1
+		else
+			setv vely rand -1 1
+		endi
+		doif velx gt 0
+			mira 1
+		else
+			mira 0
+		endi
+	endi
+
+	doif rtyp room ownr eq 8 or rtyp room ownr eq 9
+		setv ov01 0
+		accg 0
+	else
+		tick 5
+		doif ov01 gt 25
+			doif carr eq null
+				kill ownr
+			endi
+		endi
+		accg 0.5
+		addv ov01 1
+	endi
+
+	anim [ 0 0 0 0 1 1 1 1 255 ]
+endm
+
+* Fish act1, hit and eat
+
+scrp 2 15 36446 1
+	stim writ from 86 1
+	tick 1
+endm
+scrp 2 15 36446 3
+	stim writ from 87 1
+	tick 1
+endm
+scrp 2 15 36446 12
+	lock
+	stim writ from 80 1
+	wait 10
+	kill ownr
+	unlk
+endm
+
+
+*rscr
+*enum 1 1 36446
+*	kill targ
+*next
+*enum 2 15 36446
+*	kill targ
+*next
+*scrx 1 1 36446 9
+*scrx 2 15 36446 9
+*scrx 2 15 36446 1
+*scrx 2 15 36446 3
+*scrx 2 15 36446 12

@@ -1,0 +1,192 @@
+**
+** Training dummy script
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_trainingdummy.agents"
+*# DS-Name "OLS Training Dummy"
+*# depend training_dummy.c16
+*# desc = "A training dummy. Weeeheee!"
+*# Agent Animation File = "training_dummy.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "training_dummy"
+*
+*
+* 36444 = custom species number
+* Objects:
+* 2 21 36445 - Training dummy
+* Scripts:
+* 2 21 36445 1 - act1
+* 2 21 36445 2 - act2
+* 2 21 36445 3 - hit
+* 2 21 36445 0 - deactivate
+*
+*
+
+new: comp 2 21 36445 "training_dummy" 22 0 2000
+attr 4
+*
+*	creatures can act1, act2, deac, hit
+bhvr 15
+*	the morph button (bell)
+pat: butt 1 "training_dummy" 22 1 45 0 1 [] 1000 0
+part 0
+pose 3
+cato 36
+mvsf 32282 12435
+emit 15 1
+
+**OV00 is which state it is in
+*0=Norn, 1=Grendel, 2=Ettin
+
+***act 1
+scrp 2 21 36445 1
+	lock
+*	look up the word from brain.catalogue
+	sets va00 read "Creature Actions" 1
+
+	rtar 1 2 10
+	doif targ ne null
+		mesg wrt+ targ 126 va00 ownr 0
+	endi
+	targ ownr
+	part 0
+*	if in norn mode
+	doif ov00 eq 0
+		anim [10 11 12 11 10 3 13 3]
+*	if in grendel mode
+	elif ov00 eq 1
+		anim [14 15 16 15 14 6 17 6]
+*	if in ettin mode
+	elif ov00 eq 2
+		anim [18 19 20 19 18 9 21 9]
+	endi
+	sndc "kis1"
+	over
+endm
+***act 2
+scrp 2 21 36445 2
+	lock
+*	look up the word from brain.catalogue
+	sets va00 read "Creature Actions" 2
+
+	rtar 1 2 10
+	doif targ ne null
+		mesg wrt+ targ 126 va00 ownr 0
+	endi
+	targ ownr
+	part 0
+*	if in norn mode
+	doif ov00 eq 0
+		anim [10 11 12 11 10 3 13 3]
+*	if in grendel mode
+	elif ov00 eq 1
+		anim [14 15 16 15 14 6 17 6]
+*	if in ettin mode
+	elif ov00 eq 2
+		anim [18 19 20 19 18 9 21 9]
+	endi
+	sndc "tckl"
+	over
+endm
+***hit
+scrp 2 21 36445 3
+	lock
+*	look up the word from brain.catalogue
+	sets va00 read "Creature Actions" 13
+
+	rtar 1 2 10
+	doif targ ne null
+		mesg wrt+ targ 126 va00 ownr 0
+	endi
+	targ ownr
+	part 0
+*	if in norn mode
+	doif ov00 eq 0
+		anim [10 11 12 11 10 3 13 3]
+*	if in grendel mode
+	elif ov00 eq 1
+		anim [14 15 16 15 14 6 17 6]
+*	if in ettin mode
+	elif ov00 eq 2
+		anim [18 19 20 19 18 9 21 9]
+	endi
+	sndc "spnk"
+	over
+endm
+***deac
+scrp 2 21 36445 0
+	lock
+*	look up the word from brain.catalogue
+	sets va00 read "Creature Actions" 3
+
+	rtar 1 2 10
+	doif targ ne null
+		mesg wrt+ targ 126 va00 ownr 0
+	endi
+	targ ownr
+	part 0
+*	if in norn mode
+	doif ov00 eq 0
+		anim [10 11 12 11 10 3 13 3]
+*	if in grendel mode
+	elif ov00 eq 1
+		anim [14 15 16 15 14 6 17 6]
+*	if in ettin mode
+	elif ov00 eq 2
+		anim [18 19 20 19 18 9 21 9]
+	endi
+	over
+endm
+
+
+
+
+
+
+
+**morph
+scrp 2 21 36445 1000
+	lock
+	sndc "dum1"
+*	cycle through norn->grendel->ettin
+	doif ov00 lt 2
+		addv ov00 1
+	else
+		setv ov00 0
+	endi
+
+	part 0
+
+*	if changed from ettin to norn
+	doif ov00 eq 0
+		anim [9 8 7 0 1 2 3]
+		cato 36
+*	if changed from norn to grendel
+	elif ov00 eq 1
+		anim [3 2 1 0 4 5 6]
+		cato 37
+*	if changed from grendel to etting
+	elif ov00 eq 2
+		anim [6 5 4 0 7 8 9]
+		cato 38
+	endi
+	over
+endm
+
+
+
+
+
+*************REMOVAL
+*rscr
+*enum 2 21 36445
+*	kill targ
+*next
+*scrx 2 21 36445 1
+*scrx 2 21 36445 2
+*scrx 2 21 36445 3
+*scrx 2 21 36445 0
+

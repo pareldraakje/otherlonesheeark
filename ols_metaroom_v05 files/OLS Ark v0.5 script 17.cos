@@ -1,0 +1,67 @@
+**
+** Volcano seed script
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_volcanoseed.agents"
+*# DS-Name "OLS Volcano Seed"
+*# attach ols_volcanoseed.c16
+*# desc = "A supply of starch in the volcano area"
+*# Agent Animation File = "ols_volcanoseed.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_volcanoseed"
+*
+*
+* 36444 = custom species number
+* Objects:
+* 1 1 36444 - Seed patch
+* 2 3 36444 - Seed
+* Scripts:
+* 1 1 36444 9 - Patch timer
+* 2 3 36444 9 - Seed timer
+* 2 3 36444 12 - Seed eat
+*
+*
+
+** Create the seed patches (attr: invisible 16)
+new: simp 1 1 36444 "blnk" 1 0 0 attr 16 bhvr 0 
+setv ov00 66 setv ov01 40 setv ov02 3 tick 20 mvsf 31555 13489
+new: simp 1 1 36444 "blnk" 1 0 0 attr 16 bhvr 0 
+setv ov00 31 setv ov01 32 setv ov02 2 tick 350 mvsf 31635 13492
+
+** The patch timer script
+scrp 1 1 36444 9
+  setv va00 1800
+  setv va01 va00 divv va01 ov02 tick va01
+  * Create a flower (attr: invisible 16)
+  setv va02 posl setv va03 post
+  addv va02 rand 0 ov00 addv va03 rand 0 ov01
+  new: simp 2 3 36444 "ols_volcanoseed" 1 0 rand 400 600   attr 16 bhvr 0 tick va00 mvsf va02 va03
+endm
+
+* The seed timer script
+scrp 2 3 36444 9
+  doif bhvr eq 0
+  * Add physics to seed (attr: mouseable 2 + collisions 64 + physics 128 = 194, bhvr: eat 16 + pickup 32 = 48)
+  attr 194 bhvr 48 perm 100 accg 1.2 elas 30 fric 60 aero 1.1 emit 7 0.7
+  else kill ownr
+  endi
+endm
+
+
+scrp 2 3 36444 12 
+  stim writ from 77 2 kill ownr 
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 2 3 36444 kill targ next
+*enum 1 1 36444 kill targ next
+*scrx 1 1 36444 9
+*scrx 2 3 36444 9
+*scrx 2 3 36444 12

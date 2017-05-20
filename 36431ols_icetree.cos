@@ -1,0 +1,86 @@
+**
+** Ice tree script
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_icetree.agents"
+*# DS-Name "OLS Ice Tree"
+*# attach ols_icetree.c16
+*# desc = "An icy tree that grows perfectly in the Other Lone Shee's ice cave, bearing delicious fruit."
+*# Agent Animation File = "ols_icetree.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_icetree"
+*
+*
+* 36431 = Custom species number
+* Objects:
+* 2 4 36431 - Tree
+* 2 7 36431 - Flower
+* 2 8 36431 - Fruit
+* Scripts:
+* 2 4 36431 1 - Tree dispenser
+* 2 4 36431 9 - Tree timer
+* 2 7 36431 9 - Flower timer
+* 2 8 36431 9 - Fruit timer
+* 2 8 36431 12 - Fruit eat
+*
+
+* Create the tree (attr: activateable 4 + invisible 16 + collisions 64 + physics 128 = 212)
+new: simp 2 4 36431 "ols_icetree" 1 0 1
+  attr 196 bhvr 0 perm 100 accg 30 elas 0 fric 60 setv ov00 0 setv ov01 0
+  mvsf 32718 12439 tick 70
+
+
+** The timer script
+scrp 2 4 36431 9  
+  tick rand 800 900
+  setv va00 posl setv va01 post
+  * Create a flower (attr: invisible 16)
+  new: simp 2 7 36431 "ols_icetree" 1 1 rand 410 420 attr 16 bhvr 0 tick 2100	
+  addv va00 rand 18 192 addv va01 rand 61 185 mvsf va00 va01
+endm
+
+* the tree dispenser script
+scrp 2 4 36431 1
+setv va00 posl setv va01 post
+* Create fruit (attr: mouseable 2 + collisions 64 + physics 128 = 194, bhvr: eat 16 + pickup 32 = 48)
+  new: simp 2 8 36431 "ols_icetree" 1 2 rand 400 600
+  attr 194 bhvr 48 perm 100 accg 1.2 elas 30 fric 60 aero 1.1 emit 6 0.6
+  addv va00 rand 18 192 addv va01 rand 61 185 mvsf va00 va01 tick 1600
+endm
+  
+* flower script: turn flower into fruit
+scrp 2 7 36431 9
+setv va00 posl setv va01 posb
+* Create fruit
+  new: simp 2 8 36431 "ols_icetree" 1 2 rand 400 600
+  attr 194 bhvr 48 perm 100 accg 1.2 elas 30 fric 60 aero 1.1 emit 6 0.4
+  mvsf va00 va01 tick 1600
+targ ownr
+kill ownr
+endm
+
+* Fruit timer and eat script
+scrp 2 8 36431 9
+  kill ownr
+endm
+scrp 2 8 36431 12 
+  stim writ from 78 1.2 kill ownr
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 2 8 36431 kill targ next
+*enum 2 7 36431 kill targ next
+*enum 2 4 36431 kill targ next
+*scrx 2 8 36431 9
+*scrx 2 8 36431 12
+*scrx 2 4 36431 1
+*scrx 2 4 36431 9
+*scrx 2 7 36431 9

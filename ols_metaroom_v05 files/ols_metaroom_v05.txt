@@ -1,0 +1,128 @@
+"en-GB"
+
+
+group DSAG "OLS Ark v0.5"
+
+"Dependency 1" "otherloneshee_ark3.blk"
+"Dependency 2" "ols_donutfruit.c16"
+"Dependency 3" "ols_favicon.c16"
+"Dependency 4" "ols_lift2.c16"
+"Dependency 5" "ols_food.c16"
+"Dependency 6" "ols_icebush.c16"
+"Dependency 7" "ols_icetree.c16"
+"Dependency 8" "ols_lava2.c16"
+"Dependency 9" "ols_snow2.c16"
+"Dependency 10" "ols_snowbutton.c16"
+"Dependency 11" "ols_rainmaker2.c16"
+"Dependency 12" "ols_tardipebble.c16"
+"Dependency 13" "ols_volcanobush.c16"
+"Dependency 14" "ols_deserttree2.c16"
+"Dependency 15" "ols_metadoors.c16"
+"Dependency 16" "ols_mushrooms.c16"
+"Dependency 17" "ols_volcanoseed.c16"
+"Dependency 18" "ols_junglelife.c16"
+"Dependency 19" "ols_junglestuff.c16"
+"Dependency 20" "ols_jungletree.c16"
+"Dependency 21" "ols_pearplant.c16"
+"Dependency 22" "ols_teleporter.c16"
+"Dependency 23" "ols_help_v05.catalogue"
+"Dependency 24" "blnk.c16"
+"Dependency 25" "training_dummy.c16"
+"Dependency 26" "robot_toy.c16"
+"Dependency 27" "tuba.c16"
+"Dependency 28" "mini_vendor.c16"
+"Agent Animation Gallery" "ols_favicon"
+"Agent Description" "Injecting this will add the ark of the Other Lone Shee to your world. Enjoy!"
+"Agent Animation File" "ols_favicon.c16"
+"Agent Animation Gallery" "ols_favicon"
+"Web URL" "http://creaturescaves.com/"
+"Web Label" "Pilla @ CC"
+"Remove script" "enum 2 11 36430\n	kill targ\nnext\nenum 2 7 36430\n	kill targ\nnext\nenum 2 4 36430\n	kill targ\nnext\nscrx 2 11 36430 9\nscrx 2 11 36430 12\nscrx 2 4 36430 1\nscrx 2 4 36430 9\nscrx 2 7 36430 9\n\n\nenum 2 8 36431\n	kill targ\nnext\nenum 2 7 36431\n	kill targ\nnext\nenum 2 4 36431\n	kill targ\nnext\nscrx 2 8 36431 9\nscrx 2 8 36431 12\nscrx 2 4 36431 1\nscrx 2 4 36431 9\nscrx 2 7 36431 9\n\n\nenum 1 1 36432\n	kill targ\nnext\nenum 2 19 36432\n	kill targ\nnext\nenum 2 21 36432\n	kill targ\nnext\nenum 3 8 36432\n	kill targ\nnext\nscrx 1 1 36432 9\nscrx 2 19 36432 9\nscrx 2 19 36432 6\nscrx 2 21 36432 1\nscrx 2 21 36432 9\nscrx 3 8 36432 1\nscrx 3 8 36432 5\nscrx 3 8 36432 9\n\n\nenum 1 1 36433\n	kill targ\nnext\nenum 2 3 36433\n	kill targ\nnext\nenum 2 7 36433\n	kill targ\nnext\nscrx 1 1 36433 9\nscrx 2 3 36433 4\nscrx 2 3 36433 6\nscrx 2 3 36433 9\nscrx 2 3 36433 12\nscrx 2 7 36433 9\n\n\nenum 2 19 36434\n	kill targ\nnext\nenum 1 1 36434\n	kill targ\nnext\nenum 3 8 36434\n	kill targ\nnext\nscrx 2 19 36434 9\nscrx 1 1 36434 9\nscrx 3 8 36434 1\nscrx 3 8 36434 5\nscrx 3 8 36434 9\n\n\nenum 1 1 36435\n	kill targ\nnext\nenum 2 8 36435\n	kill targ\nnext\nenum 2 7 36435\n	kill targ\nnext\nscrx 1 1 36435 9\nscrx 2 8 36435 4\nscrx 2 8 36435 6\nscrx 2 8 36435 9\nscrx 2 8 36435 12\nscrx 2 7 36435 9\n\n\nenum 2 4 36436\n	kill targ\nnext\nenum 2 11 36436\n	kill targ\nnext\nenum 2 3 36436\n	kill targ\nnext\nenum 1 1 36436\n	kill targ\nnext\nscrx 2 4 36436 9\nscrx 2 11 36436 9\nscrx 2 11 36436 12\nscrx 2 3 36436 9\nscrx 2 3 36436 12\nscrx 1 1 36436 9\n\n\nsubv game \"ds_favourites\" 1\nenum 1 3 36437\n	kill targ\nnext\nenum 1 4 36437\n	setv va00 ov50\n	kill targ\n	enum 1 4 0\n		doif ov50 > va00\n			setv va01 ov50\n			subv va01 1\n			setv ov50 va01\n			setv va02 ov50\n			mulv va02 50\n			addv va02 145\n			flto va02 0\n		endi\n	next\nnext\ncmrp 6268 8936 0\nenum 1 1 36437\n	kill targ\nnext\nenum 3 1 36437\n	kill targ\nnext\n\nenum 1 2 36437\n	kill targ\nnext\nscrx 1 2 36437 1\nscrx 1 2 36437 2\nscrx 3 1 36437 1\n\n\nenum 3 3 36438\n	kill targ\nnext\nenum 2 24 36438\n	kill targ\nnext\nenum 2 7 36438\n	kill targ\nnext\nenum 2 19 36438\n	kill targ\nnext\nscrx 3 3 36438 1\nscrx 3 3 36438 3\nscrx 2 7 36438 9\nscrx 2 19 36438 6\nscrx 2 19 36438 9\n\n\nenum 2 23 36439\n	kill targ\nnext\nenum 2 15 36439\n	kill targ\nnext\nenum 2 21 36439\n	kill targ\nnext\nscrx 2 23 36439 1\nscrx 2 23 36439 2\nscrx 2 23 36439 3\nscrx 2 15 36439 9\nscrx 2 15 36439 1\nscrx 2 15 36439 3\nscrx 2 15 36439 12\nscrx 2 21 36439 1\nscrx 2 21 36439 2\nscrx 2 21 36439 3\n\n\nenum 2 3 36440\n	kill targ\nnext\nenum 2 4 36440\n	kill targ\nnext\nenum 2 7 36440\n	kill targ\nnext\nscrx 2 3 36440 9\nscrx 2 3 36440 12\nscrx 2 4 36440 1\nscrx 2 4 36440 9\nscrx 2 7 36440 9\n\n\nenum 2 8 36441\n	kill targ\nnext\nenum 2 4 36441\n	kill targ\nnext\nenum 2 7 36441\n	kill targ\nnext\nscrx 2 8 36441 9\nscrx 2 8 36441 12\nscrx 2 4 36441 1\nscrx 2 4 36441 9\nscrx 2 7 36441 9\n\nenum 2 2 36442\n	kill targ\nnext\nscrx 2 2 36442 1\n\nenum 1 1 36443\n	kill targ\nnext\nenum 2 3 36443\n	kill targ\nnext\nenum 2 11 36443\n	kill targ\nnext\nscrx 1 1 36443 9\nscrx 2 3 36443 9\nscrx 2 3 36443 12\nscrx 2 11 36443 9\nscrx 2 11 36443 12\n\nenum 2 3 36444\n	kill targ\nnext\nenum 1 1 36444\n	kill targ\nnext\nscrx 1 1 36444 9\nscrx 2 3 36444 9\nscrx 2 3 36444 12\n\n\nenum 2 21 36445\n	kill targ\nnext\nscrx 2 21 36445 1\nscrx 2 21 36445 2\nscrx 2 21 36445 3\nscrx 2 21 36445 0\n\n\nenum 1 1 36446\n	kill targ\nnext\nenum 2 15 36446\n	kill targ\nnext\nscrx 1 1 36446 9\nscrx 2 15 36446 9\nscrx 2 15 36446 1\nscrx 2 15 36446 3\nscrx 2 15 36446 12\n\n\nenum 1 1 36447\n	kill targ\nnext\nenum 2 15 36447\n	kill targ\nnext\nscrx 1 1 36447 9\nscrx 2 15 36447 9\nscrx 2 15 36447 1\nscrx 2 15 36447 3\nscrx 2 15 36447 12\n\n\nenum 1 1 36448\n	kill targ\nnext\nenum 2 21 36448\n	kill targ\nnext\nenum 2 8 36448\n	kill targ\nnext\nenum 2 7 36448\n	kill targ\nnext\nscrx 2 21 36448 1\nscrx 1 1 36448 9\nscrx 2 3 36448 9\nscrx 2 3 36448 12\nscrx 2 7 36448 9\n\nenum 1 1 36449\n	kill targ\nnext\nenum 2 15 36449\n	kill targ\nnext\nscrx 1 1 36449 9\nscrx 2 15 36449 9\nscrx 2 15 36449 1\nscrx 2 15 36449 3\nscrx 2 15 36449 12\n\n\nenum 2 3 36450\n	kill targ\nnext\nenum 2 4 36450\n	kill targ\nnext\nenum 2 7 36450\n	kill targ\nnext\nscrx 2 3 36450 9\nscrx 2 3 36450 12\nscrx 2 4 36450 1\nscrx 2 4 36450 9\nscrx 2 7 36450 9\n\n\nenum 1 1 36451\n	kill targ\nnext\nenum 2 8 36451\n	kill targ\nnext\nenum 2 7 36451\n	kill targ\nnext\nscrx 1 1 36451 9\nscrx 2 8 36451 4\nscrx 2 8 36451 6\nscrx 2 8 36451 9\nscrx 2 8 36451 12\nscrx 2 7 36451 9\n\n\nenum 1 1 36452\n	kill targ\nnext\nenum 2 8 36452\n	kill targ\nnext\nenum 2 7 36452\n	kill targ\nnext\nscrx 1 1 36452 9\nscrx 2 8 36452 4\nscrx 2 8 36452 6\nscrx 2 8 36452 9\nscrx 2 8 36452 12\nscrx 2 7 36452 9\n\n\nenum 2 2 36453\n	kill targ\nnext\nscrx 2 2 36453 1"
+
+"Script Count" 27
+"Script 1" @ "OLS Ark v0.5 script 1.cos"
+"Script 2" @ "OLS Ark v0.5 script 2.cos"
+"Script 3" @ "OLS Ark v0.5 script 3.cos"
+"Script 4" @ "OLS Ark v0.5 script 4.cos"
+"Script 5" @ "OLS Ark v0.5 script 5.cos"
+"Script 6" @ "OLS Ark v0.5 script 6.cos"
+"Script 7" @ "OLS Ark v0.5 script 7.cos"
+"Script 8" @ "OLS Ark v0.5 script 8.cos"
+"Script 9" @ "OLS Ark v0.5 script 9.cos"
+"Script 10" @ "OLS Ark v0.5 script 10.cos"
+"Script 11" @ "OLS Ark v0.5 script 11.cos"
+"Script 12" @ "OLS Ark v0.5 script 12.cos"
+"Script 13" @ "OLS Ark v0.5 script 13.cos"
+"Script 14" @ "OLS Ark v0.5 script 14.cos"
+"Script 15" @ "OLS Ark v0.5 script 15.cos"
+"Script 16" @ "OLS Ark v0.5 script 16.cos"
+"Script 17" @ "OLS Ark v0.5 script 17.cos"
+"Script 18" @ "OLS Ark v0.5 script 18.cos"
+"Script 19" @ "OLS Ark v0.5 script 19.cos"
+"Script 20" @ "OLS Ark v0.5 script 20.cos"
+"Script 21" @ "OLS Ark v0.5 script 21.cos"
+"Script 22" @ "OLS Ark v0.5 script 22.cos"
+"Script 23" @ "OLS Ark v0.5 script 23.cos"
+"Script 24" @ "OLS Ark v0.5 script 24.cos"
+"Script 25" @ "OLS Ark v0.5 script 25.cos"
+"Script 26" @ "OLS Ark v0.5 script 26.cos"
+"Script 27" @ "OLS Ark v0.5 script 27.cos"
+
+"Agent Type" 0
+"Dependency Count" 28
+"Dependency Category 1" 6
+"Dependency Category 2" 2
+"Dependency Category 3" 2
+"Dependency Category 4" 2
+"Dependency Category 5" 2
+"Dependency Category 6" 2
+"Dependency Category 7" 2
+"Dependency Category 8" 2
+"Dependency Category 9" 2
+"Dependency Category 10" 2
+"Dependency Category 11" 2
+"Dependency Category 12" 2
+"Dependency Category 13" 2
+"Dependency Category 14" 2
+"Dependency Category 15" 2
+"Dependency Category 16" 2
+"Dependency Category 17" 2
+"Dependency Category 18" 2
+"Dependency Category 19" 2
+"Dependency Category 20" 2
+"Dependency Category 21" 2
+"Dependency Category 22" 2
+"Dependency Category 23" 7
+"Dependency Category 24" 2
+"Dependency Category 25" 2
+"Dependency Category 26" 2
+"Dependency Category 27" 2
+"Dependency Category 28" 2
+"Agent Sprite First Image" 1
+
+
+
+inline FILE "ols_deserttree2.c16" "ols_deserttree2.c16"
+inline FILE "ols_donutfruit.c16" "ols_donutfruit.c16"
+inline FILE "ols_favicon.c16" "ols_favicon.c16"
+inline FILE "ols_food.c16" "ols_food.c16"
+inline FILE "ols_help_v05.catalogue" "ols_help_v05.catalogue"
+inline FILE "ols_icebush.c16" "ols_icebush.c16"
+inline FILE "ols_icetree.c16" "ols_icetree.c16"
+inline FILE "ols_junglelife.c16" "ols_junglelife.c16"
+inline FILE "ols_junglestuff.c16" "ols_junglestuff.c16"
+inline FILE "ols_jungletree.c16" "ols_jungletree.c16"
+inline FILE "ols_lava2.c16" "ols_lava2.c16"
+inline FILE "ols_lift2.c16" "ols_lift2.c16"
+inline FILE "ols_metadoors.c16" "ols_metadoors.c16"
+inline FILE "ols_mushrooms.c16" "ols_mushrooms.c16"
+inline FILE "ols_pearplant.c16" "ols_pearplant.c16"
+inline FILE "ols_rainmaker2.c16" "ols_rainmaker2.c16"
+inline FILE "ols_snow2.c16" "ols_snow2.c16"
+inline FILE "ols_snowbutton.c16" "ols_snowbutton.c16"
+inline FILE "ols_tardipebble.c16" "ols_tardipebble.c16"
+inline FILE "ols_teleporter.c16" "ols_teleporter.c16"
+inline FILE "ols_volcanobush.c16" "ols_volcanobush.c16"
+inline FILE "ols_volcanoseed.c16" "ols_volcanoseed.c16"
+inline FILE "otherloneshee_ark3.blk" "otherloneshee_ark3.blk"
+

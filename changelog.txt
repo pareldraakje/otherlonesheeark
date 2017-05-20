@@ -1,0 +1,9 @@
+Changelog:
+
+16/05: Added snow disable button and finetuned snow effects.
+26/04: updated CA emitters: added moisture + nutrient emitters. Added more toys.
+29/04: Fixed bug with tardigrade dispensers
+
+Known bugs:
+- Plants can't be replanted elsewhere
+

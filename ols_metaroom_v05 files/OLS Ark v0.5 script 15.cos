@@ -1,0 +1,80 @@
+**
+** The doors between the rooms
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_metadoors.agents"
+*# DS-Name "OLS Metaroom door dividers"
+*# attach ols_metadoors.c16
+*# desc = "These doors divide the Other Lone Shee's ark into smaller sections."
+*# Agent Animation File = "ols_metadoors.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_metadoors"
+*
+*
+* 36442 = custom species number
+* Objects:
+* 2 2 36442 1 - Door
+* Scripts:
+* 2 4 36442 1 - Door activated
+
+** Create the doors
+* Desert - Corridor
+new: simp 2 2 36442 "ols_metadoors" 5 0 2
+attr 20
+bhvr 0
+mvto 31511 12726
+pose 4
+* Corridor - Ice cave
+new: simp 2 2 36442 "ols_metadoors" 5 0 2
+attr 20
+bhvr 0
+mvto 32468 12710
+pose 4
+* Volcano - Corridor
+new: simp 2 2 36442 "ols_metadoors" 5 0 2
+attr 20
+bhvr 0
+mvto 31638 12986
+pose 4
+* Corridor - Navi jungle
+new: simp 2 2 36442 "ols_metadoors" 5 0 2
+attr 20
+bhvr 0
+mvto 32378 12990
+pose 4
+
+scrp 2 2 36442 1
+* Bottom, left, right
+	setv va00 posb
+	subv va00 30
+	setv va01 posl
+	addv va01 42
+	subv va01 20
+	setv va50 grap va01 va00
+	setv va02 posl
+	addv va02 42
+	addv va02 20
+	setv va51 grap va02 va00
+
+* Animate and close doors
+
+	doif pose eq 0
+		door va50 va51 100
+		link va50 va51 1
+		anim [0 1 2 3 4]
+		over
+	elif pose eq 4
+		door va50 va51 0
+		link va50 va51 0
+		anim [4 3 2 1 0]
+		over
+	endi
+endm
+
+*rscr
+*enum 2 2 36442 kill targ next
+*scrx 2 2 36442 1

@@ -1,0 +1,232 @@
+** Donutfruit
+** Coding & sprites by Priscilla Dekie
+
+*
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_donutfruit.agents"
+*# DS-Name "OLS Donut Fruit"
+*# attach ols_donutfruit.c16
+*# desc = "This is some delicious donutty fruit thingy."
+*# Agent Animation File = "ols_donutfruit.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_donutfruit"
+*
+
+*** DONUTFRUIT SEEDER
+** PREVENTS EXTINCTION
+new: simp 1 1 36436 "blnk" 1 0 0
+tick 1
+rnge 1000
+mvto 33255 12567
+
+scrp 1 1 36436 9
+	inst
+        setv va00 0
+        esee 2 4 36436 
+	  targ ownr
+          addv va00 1
+        next
+	esee 2 3 36436
+          targ ownr
+          addv va00 1
+        next
+*	if there's less than 3 left, produce some seed
+	doif va00 < 3
+		setv va00 posl
+		setv va01 post
+		reps 6
+			new: simp 2 3 36436 "ols_donutfruit" 1 0 1002
+			attr 195
+			bhvr 48
+			elas 50
+			aero 2
+			perm 100
+			accg 0.05
+			mvsf va00 va01
+			velo rand -10 10 rand -10 0
+			emit 8 0.3
+			tick rand 50 300
+
+		repe
+	endi
+	tick 1300
+endm
+
+** seed spawn timer
+scrp 2 3 36436 9
+	doif fall eq 1
+		stop
+	endi
+	doif carr ne null
+		stop
+	endi
+
+	*check if it's cold enough to live
+        setv va01 grap posx posy
+        setv va02 prop va01 2
+        doif va02 > 0.01
+	   kill ownr
+	endi
+
+	rnge 150
+	setv va00 0
+	esee 2 4 36436
+		addv va99 1
+	next
+	doif va99 ge 1
+		kill ownr
+	endi
+
+	rnge 300
+	setv va00 0
+	esee 2 4 36436
+		addv va99 1
+	next
+	doif va99 > 1
+		kill ownr
+	endi
+	setv va02 posx
+	setv va03 posy
+	new: simp 2 4 36436 "ols_donutfruit" 6 1 1005
+	attr 192
+	perm 100
+	emit 8 0.1
+	accg 3
+	elas 25
+	fric 90
+	aero 2
+	setv ov10 rand 100 700
+	mvsf va02 va03
+	tick 1
+	kill ownr
+endm
+
+** Timer
+scrp 2 4 36436 9
+	tick 0
+	gsub grow
+	gsub live
+	gsub fruit
+	gsub wither
+	gsub seed
+	gsub die
+
+	subr grow
+		setv va05 rand 0 1
+		setv va00 pose
+		mira va05
+		reps 5
+			wait ov10
+			addv va00 1
+			pose va00
+			mira va05
+		repe
+	retn
+
+	subr live
+		setv va01 ov10
+		loop
+			doif va01 ne 1
+				subv va01 1
+			endi
+			wait 1
+		untl va01 = 1
+	retn
+
+	subr fruit
+		pose 2
+		setv va10 posx
+		setv va11 posy
+		reps 3
+			new: simp 2 11 36436 "ols_donutfruit" 1 7 1003
+			attr 195
+			bhvr 48
+			accg 2
+			perm 100
+			fric 50
+			elas 30
+			aero 2
+			emit 8 0.3
+			velo rand -10 10 rand -5 0
+			mvsf va10 va11
+			tick rand 600 2000
+			targ ownr
+		repe
+	retn
+
+	subr wither
+		loop
+			wait 150
+			setv va00 pose
+			subv va00 1
+			pose va00
+			mira va05
+		untl pose = 0
+	retn
+
+	subr seed
+		setv va10 posx
+		setv va11 posy
+		reps rand 2 5
+			new: simp 2 3 36436 "ols_donutfruit" 1 0 1004
+			attr 195
+			bhvr 48
+			perm 100
+			elas 50
+			aero 2
+			accg 0.05
+			mvsf va10 va11
+			velo rand -20 20 rand -10 0
+			tick rand 500 1500
+			targ ownr
+		repe
+		wait 150
+	retn
+
+	subr die
+		kill ownr
+	retn
+endm
+
+
+** fruit die timer
+scrp 2 11 36436 9
+	doif carr ne null
+		stop
+	endi
+	kill ownr
+endm
+
+
+**seed eat
+scrp 2 3 36436 12
+	inst
+	wait 5
+	stim writ from 77 1.5
+	stim writ from 78 0.5
+	kill ownr
+endm
+
+**food eat
+scrp 2 11 36436 12
+	inst
+	wait 5
+	stim writ from 79 0.75
+	stim writ from 80 0.75
+	kill ownr
+endm
+
+
+** ---------removal script-----------
+*rscr
+*enum 2 4 36436 kill targ next
+*enum 2 11 36436 kill targ next
+*enum 2 3 36436 kill targ next
+*enum 1 1 36436 kill targ next
+*scrx 2 4 36436 9
+*scrx 2 11 36436 9
+*scrx 2 11 36436 12
+*scrx 2 3 36436 9
+*scrx 2 3 36436 12
+*scrx 1 1 36436 9

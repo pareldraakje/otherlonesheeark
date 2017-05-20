@@ -1,0 +1,169 @@
+**
+** Tardigrades, tardigrade dispenser and a pebble
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_tardipebble.agents"
+*# DS-Name "OLS Tardigrade and Pebble"
+*# attach ols_tardipebble.c16
+*# desc = "A tardigrade dispensor, some tardigrades and a pebble toy."
+*# Agent Animation File = "ols_tardipebble.c16"
+*# Agent Sprite First Image = 1
+*# Agent Animation Gallery = "ols_tardipebble"
+*
+*
+* 36439 = Custom species number
+* Objects:
+* 2 23 36439 - Tardigrade dispenser
+* 2 15 36439 - Tardigrade
+* 2 21 36439 - Pebble
+*
+* Scripts:
+* 2 23 36439 1 - Dispenser activation 1
+* 2 23 36439 2 - Dispenser activation 2
+* 2 23 36439 3 - Dispenser hit
+* 2 23 36439 9 - Dispenser timer
+* 2 13 36439 9 - Tardigrade timer
+* 2 13 36439 1 - Tardigrade activation 1
+* 2 13 36439 3 - Tardigrade hit
+* 2 13 36439 12 - Tardigrade eat
+* 2 21 36439 1 - Pebble activation 1
+* 2 21 36439 2 - Pebble activation 2
+* 2 21 36439 3 - Pebble hit
+*
+
+**
+** Creation
+**
+
+** Create the volcano tardigrade dispenser  (2 23: dispenser, attr: activateable 4, bhvr: activateable 1  + activateable 2 + hittable 8 = 9)
+new: simp 2 23 36439 "ols_tardipebble" 3 7 200 attr 4 bhvr 9 mvsf 31235 13498 tick 500 emit 18 .25
+
+** Create 3 initial adult tardigrades in volcano (2 13: good bug, attr: mouseable 2 + activateable 4 + collisions 64 + physics 128 = 198, bhvr: activateable 1 + hittable 8 + eatable 16 + picuppable 32 = 57, ov00 = life stage, ov01 = lifetime)
+reps 3
+new: simp 2 15 36439 "ols_tardipebble" 4 3 rand 600 950 attr 198 bhvr 57 mvsf 31428 13485 tick 10 perm 100 accg 1 elas 50 fric 30 
+setv ov00 1 setv ov01 2300
+repe
+
+** Create the upper hallway tardigrade dispenser (2 23: dispenser, attr: activateable 4, bhvr: activateable 1  + activateable 2 + hittable 8 = 9)
+new: simp 2 23 36439 "blnk" 1 0 200 attr 20 bhvr 9 mvsf 32089 12783 tick 500 emit 18 .25
+
+** Create 3 initial adult tardigrades (2 13: good bug, attr: mouseable 2 + activateable 4 + collisions 64 + physics 128 = 198, bhvr: activateable 1 + hittable 8 + eatable 16 + picuppable 32 = 57, ov00 = life stage, ov01 = lifetime)
+reps 3
+new: simp 2 15 36439 "ols_tardipebble" 4 3 rand 600 950 attr 198 bhvr 57 mvsf 32089 12783 tick 10 perm 100 accg 1 elas 50 fric 30 
+setv ov00 1 setv ov01 2300
+repe
+
+** Create the pebble ( 2 21: toy, attr: activateable 4 + collisions 64 + physics 128 = 196, bhvr: activateable 1 + activateable 2 + hittable 8 = 11)
+new: simp 2 21 36439 "ols_tardipebble" 3 0 0 attr 196 bhvr 11 mvsf 30911 13489 perm 100 accg 1 elas 0 fric 100
+
+
+**
+** Scripts
+**
+
+** Tardigrade dispenser activate1
+scrp 2 23 36439 1
+  setv va00 posx setv va01 posy stim writ from 90 1 
+  lock anim [ 1 1 2 2 ]
+  new: simp 2 15 36439 "ols_tardipebble" 4 3 rand 600 950 attr 198 bhvr 57 mvsf va00 va01 tick 10 perm 100 accg 1 elas 50 fric 30 
+  setv ov00 0 setv ov01 2300 velo rand 2 10 rand -8 -2
+  targ ownr anim [ 1 1 0 0 ] unlk
+endm
+
+** Tardigrade dispenser activate2
+scrp 2 23 36439 2
+  setv va00 posx setv va01 posy stim writ from 90 1 
+  lock anim [ 1 1 2 2 ]
+  new: simp 2 15 36439 "ols_tardipebble" 4 3 rand 600 950 attr 198 bhvr 57 mvsf va00 va01 tick 10 perm 100 accg 1 elas 50 fric 30 
+  setv ov00 0 setv ov01 2300 velo rand 2 10 rand -8 -2
+  targ ownr anim [ 1 1 0 0 ] unlk
+endm
+
+** Tardigrade dispenser hit
+scrp 2 23 36439 3 
+  stim writ from 92 1 
+endm
+
+** Tardigrade dispenser timer - to prevent extinction
+scrp 2 23 36439 9
+  setv va98 posx setv va99 posy
+  setv va00 0 rnge 500 esee 2 15 36439 addv va00 1 next
+  doif va00 lt 3
+    lock
+    new: simp 2 15 36439 "ols_tardipebble" 4 3 rand 600 950 attr 198 bhvr 57 mvsf va98 va99 tick 10 perm 100 accg 1 elas 50 fric 30 
+    setv ov00 0 setv ov01 2300 velo rand 2 10 rand -8 -2
+    targ ownr unlk
+  endi
+endm
+
+** Tardigrade timer
+scrp 2 15 36439 9
+
+  doif ov01 lt 41 kill ownr endi
+
+  gsub move
+  gsub grow
+
+  tick rand 10 40
+  subv ov01 tick
+
+  subr move
+    setv va03 rand 0 1 doif va03 eq 0 setv va03 -1 endi mulv va03 rand 2 5
+    doif svel gt 0 setv va02 1 else setv va02 0 endi
+    doif ov00 lt 2 mira va02 
+      doif ov00 eq 0 anim [ 0 0 1 1 255 ] elif ov00 eq 1 anim [ 2 2 3 3 255 ] endi
+      velo va03 rand -1 -4
+    elif ov00 eq 2 pose 2
+    endi
+  retn
+  
+  subr grow
+    doif ov01 lt 1800 doif ov00 eq 0 setv ov00 1 endi endi
+    doif ov01 lt 200 setv ov00 2 endi
+  retn
+endm
+  
+
+** Tardigrade activate 1, hit and eat
+scrp 2 15 36439 1 
+stim writ from 86 1 tick 1
+endm
+scrp 2 15 36439 3 
+stim writ from 87 1 tick 1
+endm
+scrp 2 15 36439 12 
+lock stim writ from 80 1 wait 10 kill ownr unlk 
+endm
+
+** Pebble activate 1, activate 2 and hit
+scrp 2 21 36439 1 
+lock anim [ 1 1 2 2 ] stim writ from 97 1 wait 5 anim [ 1 1 0 ] unlk 
+endm
+scrp 2 21 36439 2 
+lock anim [ 1 1 2 2 ] stim writ from 97 1 wait 5 anim [ 1 1 0 ] unlk 
+endm
+scrp 2 21 36439 3 
+lock anim [ 1 1 2 2 ] wait 5 anim [ 1 1 0 ] unlk 
+endm
+
+
+** Removal script
+
+*rscr
+*enum 2 23 36439 kill targ next
+*enum 2 15 36439 kill targ next
+*enum 2 21 36439 kill targ next
+*scrx 2 23 36439 1
+*scrx 2 23 36439 2
+*scrx 2 23 36439 3
+*scrx 2 15 36439 9
+*scrx 2 15 36439 1
+*scrx 2 15 36439 3
+*scrx 2 15 36439 12
+*scrx 2 21 36439 1
+*scrx 2 21 36439 2
+*scrx 2 21 36439 3

@@ -1,0 +1,89 @@
+**
+** Teleporter
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_teleporter.agents"
+*# DS-Name "OLS Teleporter"
+*# attach ols_teleporter.c16
+*# desc = "The teleporter to the OLS"
+*# Agent Animation File = "ols_teleporter.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_teleporter"
+*
+*
+* 36452 = Custom species number
+* Objects:
+* 2 2 36453 - Teleporter
+* Scripts:
+* 2 2 36453 1 - Teleporter activate
+*
+
+** Create the doors (attr: mouseable 2 + activateable 4 + collide 64 + physics 128 = 198, bhvr act1 1)
+* Door 1 inside OLS
+new: simp 2 2 36453 "ols_teleporter" 3 0 51
+attr 198
+bhvr 1
+perm 100
+accg 1.2
+elas 0
+fric 100
+
+setv ov00 0
+mvsf 32192 13022
+
+* Door 2 inside agent injector
+new: simp 2 2 36453 "ols_teleporter" 3 0 50
+attr 198
+bhvr 1
+perm 100
+accg 1.2
+elas 0
+fric 100
+setv ov00 1
+mvsf game "CreatorX" game "CreatorY"
+
+
+
+** The door push script
+scrp 2 2 36453 1
+	lock
+	setv va00 ov00
+	seta va01 from
+	seta va99 ownr
+	anim [ 1 1 1 2 2 ]
+	over
+	enum 2 2 36453
+		doif va00 ne ov00
+			seta va98 targ
+			setv va02 posx
+			setv va03 posy
+		endi
+	next
+
+	doif va01 eq pntr
+		cmrp va02 va03 0
+	else
+		targ va98
+		setv va03 posb
+		subv va03 10
+		targ va01
+		mvft va02 va03
+		stim writ va01 95 1
+	endi
+
+	targ va99
+	anim [ 2 2 1 1 1 0 0 ]
+	over
+	unlk
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 2 2 36453 kill targ next
+*scrx 2 2 36452 1

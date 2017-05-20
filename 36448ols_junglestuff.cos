@@ -1,0 +1,149 @@
+**
+** JUNGLE NORN HOME CA EMITTER + FLOWERS
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_junglestuff.agents"
+*# DS-Name "OLS Jungle stuff"
+*# attach ols_junglestuff.c16
+*# desc = "JUNGLE NORN HOME CA EMITTER + FLOWERS"
+*# Agent Animation File = "ols_junglestuff.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_junglestuff"
+*
+*
+* 36433 = Custom species number
+* Objects:
+* 1 1 36448 - Invisible patch
+* 2 7 36448 - Flower
+* 2 8 36448 - Fruit
+*
+* Scripts:
+* 1 1 36448 9 - Patch plant timer
+* 2 7 36448 9 - Flower timer
+* 2 8 36448 9 - Fruit timer
+* 2 8 36448 12 - Fruit eat event
+*
+
+
+** Create the invisible patch plant (attr: invisible 16)
+new: simp 1 1 36448 "blnk" 1 0 1
+attr 16
+bhvr 0
+mvsf 33371 13027
+tick 1
+
+
+** Create the crystal toy (attr: activateable 4, bhvr: activate 1)
+new: simp 2 21 36448 "ols_junglestuff" 3 5 1
+attr 4
+bhvr 1
+mvto 33325 13248
+emit 15 1
+
+** Create the invisible eywa critter dispenser
+
+
+** Toy act1 script
+scrp 2 21 36448 1
+	stim writ from 97 1
+	stim writ from 70 1
+	lock
+	anim [1 1 1 2 2 2 1 1 1 0 ]
+	unlk
+endm
+
+** The plant patch timer script
+scrp 1 1 36448 9
+	tick rand 400 650
+	setv va00 posl
+	setv va01 post
+	setv va02 0
+	setv va03 0
+	enum 2 7 36448
+	addv va03 1
+	next
+	doif va03 lt 4	
+* Create a flower (attr: invisible 16)
+	new: simp 2 7 36448 "ols_junglestuff" 4 0 rand 410 420
+	attr 16
+	bhvr 0
+	tick rand 400 550
+	emit 9 0.1
+	mira rand 0 1
+	rnge 20
+	setv ov00 0
+	addv va00 rand 0 183
+	addv va01 rand 0 235
+	mvsf va00 va01
+	endi
+endm
+
+* flower script: turn flower into fruit
+scrp 2 7 36448 9
+	addv ov00 1
+	doif ov00 lt 3
+		pose ov00
+	elif ov00 eq 3
+		pose ov00
+		tick 100
+		setv va00 posx
+		setv va01 posy
+* Create fruit (attr: carry 2 + collide 64 + physics 128 = 194, bhvr: eat 16 + pickup 32 = 48 )
+		new: simp 2 8 36448 "ols_junglestuff" 1 4 rand 430 600
+		mira rand 0 1
+		attr 194
+		bhvr 48
+		perm 100
+		accg 1.2
+		elas 30
+		fric 60
+		aero 1.1
+		emit 6 0.3
+		mvsf va00 va01
+		tick 1200
+	elif ov00 eq 4
+		pose 0
+	else
+		kill ownr
+	endi
+	targ ownr
+endm
+
+* Fruit timer and eat script
+scrp 2 8 36448 9
+	doif carr ne null
+		tick 200
+	else
+		kill ownr
+	endi
+endm
+scrp 2 8 36448 12
+	stim writ from 78 1.2
+	kill ownr
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 1 1 36448
+*	kill targ
+*next
+*enum 2 21 36448
+*	kill targ
+*next
+*enum 2 8 36448
+*	kill targ
+*next
+*enum 2 7 36448
+*	kill targ
+*next
+*scrx 2 21 36448 1
+*scrx 1 1 36448 9
+*scrx 2 3 36448 9
+*scrx 2 3 36448 12
+*scrx 2 7 36448 9

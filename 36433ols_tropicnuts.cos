@@ -1,0 +1,84 @@
+**
+** GREENHOUSE NUTS PATCH PLANT
+** Open source, do whatever you want with the code/images. No need to credit.
+** Pilla
+**
+*
+* CAOS2PRAY CHUNK
+*# Pray-File "ols_tropicnuts.agents"
+*# DS-Name "OLS Tropics Nuts"
+*# attach ols_food.c16
+*# desc = "Watch your nuts man. Yolo."
+*# Agent Animation File = "ols_food.c16"
+*# Agent Sprite First Image = 0
+*# Agent Animation Gallery = "ols_food"
+*
+*
+* 36433 = Custom species number
+* Objects:
+* 1 1 36433 - Invisible patch
+* 2 7 36433 - Flower
+* 2 3 36433 - Seed
+*
+* Scripts:
+* 1 1 36433 9 - Patch plant timer
+* 2 7 36433 9 - Flower timer
+* 2 3 36433 4 - Seed pickup
+* 2 3 36433 6 - Seed collision
+* 2 3 36433 9 - Seed timer
+* 2 3 36433 12 - Seed eat event
+*
+
+** Create the invisible patch plants (attr: invisible 16)
+new: simp 1 1 36433 "ols_food" 1 23 1 attr 16 bhvr 0 mvsf 31691 12517 tick 1
+new: simp 1 1 36433 "ols_food" 1 23 1 attr 16 bhvr 0 mvsf 31813 12597 tick 130
+new: simp 1 1 36433 "ols_food" 1 23 1 attr 16 bhvr 0 mvsf 32091 12371 tick 240
+
+** The timer script
+scrp 1 1 36433 9
+  tick rand 800 900
+  setv va00 posl setv va01 post
+  * Create a flower (attr: invisible 16)
+  new: simp 2 7 36433 "ols_food" 1 14 rand 410 420 attr 16 bhvr 0 tick 2100
+  addv va00 rand 0 100 addv va01 rand 0 110 mvsf va00 va01
+endm
+
+* flower script: turn flower into nut
+scrp 2 7 36433 9
+setv va00 posl setv va01 post
+* Create seed (attr: carry 2 + collide 64 + physics 128 = 194, bhvr: eat 16 + pickup 32 = 48 )
+  new: simp 2 3 36433 "ols_food" 2 15 rand 400 600   
+  attr 194 bhvr 48 perm 100 accg 1.2 elas 30 fric 60 aero 1.1 emit 7 1
+  mvsf va00 va01 tick 1600
+targ ownr
+kill ownr
+endm
+
+* Nut pickup, nut collision, nut timer and eat script.
+scrp 2 3 36433 4
+  pose 0
+endm
+scrp 2 3 36433 6
+  pose 1
+endm
+scrp 2 3 36433 9
+  kill ownr
+endm
+scrp 2 3 36433 12
+  stim writ from 77 2 kill ownr
+endm
+
+**
+** Removal script
+**
+
+*rscr
+*enum 1 1 36433 kill targ next
+*enum 2 3 36433 kill targ next
+*enum 2 7 36433 kill targ next
+*scrx 1 1 36433 9
+*scrx 2 3 36433 4
+*scrx 2 3 36433 6
+*scrx 2 3 36433 9
+*scrx 2 3 36433 12
+*scrx 2 7 36433 9
